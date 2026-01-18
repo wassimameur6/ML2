@@ -1,0 +1,21 @@
+{
+  "768805383_OFF001_e33fff90": {
+    "client_num": 768805383,
+    "customer_name": "Gregory Lewis",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.01,
+    "churn_risk": "low",
+    "timestamp": "2026-01-17T19:31:34.457364",
+    "status": "pending"
+  },
+  "768805383_OFF001_a71ec5ed": {
+    "client_num": 768805383,
+    "customer_name": "Gregory Lewis",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.01,
+    "churn_risk": "low",
+    "timestamp": "2026-01-17T19:33:33.504602",
+    "status": "pending"
+  },

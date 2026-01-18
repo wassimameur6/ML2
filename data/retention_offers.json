@@ -1,0 +1,374 @@
+{
+  "offers": [
+    {
+      "offer_id": "OFF001",
+      "title": "Loyalty Cashback Bonus",
+      "description": "Get 5% cashback on all purchases for the next 3 months as a thank you for being a valued customer.",
+      "target_profile": {
+        "income_category": [
+          "$60K - $80K",
+          "$80K - $120K",
+          "$120K +"
+        ],
+        "card_category": [
+          "Blue",
+          "Silver"
+        ],
+        "min_tenure_months": 24,
+        "churn_risk": [
+          "medium",
+          "high"
+        ]
+      },
+      "offer_type": "cashback",
+      "value": "5% cashback for 3 months",
+      "email_subject": "You've Earned a Special Cashback Reward!",
+      "email_body": "Dear {customer_name},\n\nWe truly appreciate your loyalty over the past {tenure} months. As a token of our gratitude, we're offering you an exclusive 5% cashback on ALL purchases for the next 3 months!\n\nThis means more rewards on everything from groceries to travel. No minimum spend required.\n\nTo activate this offer, simply continue using your card as usual - the cashback will be automatically credited to your account.\n\nThank you for being part of our family.\n\nWarm regards,\n{company_name}"
+    },
+    {
+      "offer_id": "OFF002",
+      "title": "Free Card Upgrade",
+      "description": "Complimentary upgrade to Silver card with no annual fee for the first year.",
+      "target_profile": {
+        "income_category": [
+          "$40K - $60K",
+          "$60K - $80K"
+        ],
+        "card_category": [
+          "Blue"
+        ],
+        "min_tenure_months": 12,
+        "churn_risk": [
+          "medium",
+          "high"
+        ]
+      },
+      "offer_type": "upgrade",
+      "value": "Free Silver card upgrade",
+      "email_subject": "You're Invited: Free Card Upgrade Inside",
+      "email_body": "Dear {customer_name},\n\nGreat news! Based on your excellent account history, you've been selected for a complimentary upgrade to our Silver Card.\n\nHere's what you'll enjoy:\n\u2022 Higher credit limit\n\u2022 Premium travel insurance\n\u2022 Airport lounge access (2 visits/year)\n\u2022 No annual fee for your first year (save $95!)\n\nThis exclusive offer is valid for the next 14 days. Simply reply to this email or call us to upgrade instantly.\n\nWe'd love to continue growing with you.\n\nBest regards,\n{company_name}"
+    },
+    {
+      "offer_id": "OFF003",
+      "title": "Annual Fee Waiver",
+      "description": "Complete annual fee waiver for the next year to show our appreciation.",
+      "target_profile": {
+        "income_category": [
+          "Less than $40K",
+          "$40K - $60K"
+        ],
+        "card_category": [
+          "Blue",
+          "Silver"
+        ],
+        "min_tenure_months": 6,
+        "churn_risk": [
+          "high"
+        ]
+      },
+      "offer_type": "fee_waiver",
+      "value": "100% annual fee waived",
+      "email_subject": "Your Annual Fee Has Been Waived!",
+      "email_body": "Dear {customer_name},\n\nWe know that every dollar counts, and we want you to know how much we value having you with us.\n\nThat's why we've decided to waive your annual fee for the upcoming year - that's a savings of ${fee_amount}!\n\nNo action needed on your part. This has already been applied to your account.\n\nWe hope this small gesture shows our appreciation for your continued trust in us. If there's anything we can do to serve you better, please don't hesitate to reach out.\n\nWith gratitude,\n{company_name}"
+    },
+    {
+      "offer_id": "OFF004",
+      "title": "Bonus Reward Points",
+      "description": "Earn 10,000 bonus points after spending $500 in the next 30 days.",
+      "target_profile": {
+        "income_category": [
+          "$60K - $80K",
+          "$80K - $120K",
+          "$120K +"
+        ],
+        "card_category": [
+          "Silver",
+          "Gold",
+          "Platinum"
+        ],
+        "min_tenure_months": 12,
+        "churn_risk": [
+          "low",
+          "medium"
+        ]
+      },
+      "offer_type": "bonus_points",
+      "value": "10,000 bonus points",
+      "email_subject": "Earn 10,000 Bonus Points - Exclusive Offer",
+      "email_body": "Dear {customer_name},\n\nReady for your next adventure? We're giving you an easy way to get there faster!\n\nEarn 10,000 bonus reward points when you spend just $500 in the next 30 days. That's enough for:\n\u2022 A free domestic flight\n\u2022 2 nights at select hotels\n\u2022 $100 in gift cards\n\nYou're already {points_away} points away from your next reward. This bonus could get you there!\n\nStart earning today - your purchases already count.\n\nHappy spending,\n{company_name}"
+    },
+    {
+      "offer_id": "OFF005",
+      "title": "Lower Interest Rate",
+      "description": "Reduced APR by 3% for the next 12 months on all purchases and balance transfers.",
+      "target_profile": {
+        "income_category": [
+          "Less than $40K",
+          "$40K - $60K",
+          "$60K - $80K"
+        ],
+        "card_category": [
+          "Blue",
+          "Silver"
+        ],
+        "min_tenure_months": 6,
+        "churn_risk": [
+          "medium",
+          "high"
+        ]
+      },
+      "offer_type": "rate_reduction",
+      "value": "3% APR reduction",
+      "email_subject": "Good News: Your Interest Rate Just Got Better",
+      "email_body": "Dear {customer_name},\n\nWe're pleased to inform you that you qualify for a special reduced interest rate!\n\nStarting immediately, your APR will be reduced by 3% for the next 12 months. This applies to:\n\u2022 All new purchases\n\u2022 Balance transfers\n\u2022 Cash advances\n\nThis could save you hundreds of dollars over the year. The new rate is already active on your account.\n\nThank you for being a loyal customer. We're committed to helping you achieve your financial goals.\n\nSincerely,\n{company_name}"
+    },
+    {
+      "offer_id": "OFF006",
+      "title": "Premium Concierge Access",
+      "description": "Complimentary 6-month access to our premium concierge service.",
+      "target_profile": {
+        "income_category": [
+          "$80K - $120K",
+          "$120K +"
+        ],
+        "card_category": [
+          "Gold",
+          "Platinum"
+        ],
+        "min_tenure_months": 24,
+        "churn_risk": [
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      "offer_type": "premium_service",
+      "value": "6 months free concierge",
+      "email_subject": "Your VIP Access Awaits",
+      "email_body": "Dear {customer_name},\n\nAs one of our most valued customers, we'd like to offer you something special.\n\nEnjoy 6 months of complimentary access to our Premium Concierge Service, including:\n\u2022 24/7 personal assistant\n\u2022 Restaurant reservations at exclusive venues\n\u2022 Travel planning and booking\n\u2022 Event tickets and experiences\n\u2022 Personal shopping assistance\n\nSimply call our dedicated line or use the mobile app to access your concierge anytime.\n\nYou deserve the very best.\n\nWith appreciation,\n{company_name}"
+    },
+    {
+      "offer_id": "OFF007",
+      "title": "Double Points Weekend",
+      "description": "Earn double points on all weekend purchases for the next 2 months.",
+      "target_profile": {
+        "income_category": [
+          "$40K - $60K",
+          "$60K - $80K",
+          "$80K - $120K"
+        ],
+        "card_category": [
+          "Blue",
+          "Silver",
+          "Gold"
+        ],
+        "min_tenure_months": 6,
+        "churn_risk": [
+          "low",
+          "medium"
+        ]
+      },
+      "offer_type": "bonus_points",
+      "value": "2x points on weekends",
+      "email_subject": "Double Your Points Every Weekend!",
+      "email_body": "Dear {customer_name},\n\nWeekends just got more rewarding!\n\nFor the next 2 months, you'll earn DOUBLE points on every purchase made on Saturday and Sunday. Whether it's brunch with friends, shopping, or a weekend getaway - you'll rack up points twice as fast.\n\nNo registration needed. Just use your card and watch your points grow!\n\nMake every weekend count.\n\nCheers,\n{company_name}"
+    },
+    {
+      "offer_id": "OFF008",
+      "title": "Emergency Credit Increase",
+      "description": "Instant credit limit increase of 25% with no credit check required.",
+      "target_profile": {
+        "income_category": [
+          "$40K - $60K",
+          "$60K - $80K",
+          "$80K - $120K"
+        ],
+        "card_category": [
+          "Blue",
+          "Silver"
+        ],
+        "min_tenure_months": 12,
+        "churn_risk": [
+          "medium",
+          "high"
+        ]
+      },
+      "offer_type": "credit_increase",
+      "value": "25% credit limit increase",
+      "email_subject": "Your Credit Limit Has Been Increased!",
+      "email_body": "Dear {customer_name},\n\nWe've got great news! Based on your excellent payment history, we've pre-approved you for a 25% credit limit increase.\n\nYour new limit: ${new_limit}\n\nThis gives you:\n\u2022 More purchasing power\n\u2022 Better credit utilization ratio\n\u2022 Greater financial flexibility\n\nNo credit check required. Simply reply 'YES' to this email to activate your new limit instantly.\n\nWe're here to support your financial journey.\n\nBest,\n{company_name}"
+    },
+    {
+      "offer_id": "OFF009",
+      "title": "Welcome Back Bonus",
+      "description": "Special reactivation bonus of $50 statement credit for returning customers.",
+      "target_profile": {
+        "income_category": [
+          "Less than $40K",
+          "$40K - $60K",
+          "$60K - $80K"
+        ],
+        "card_category": [
+          "Blue"
+        ],
+        "min_tenure_months": 3,
+        "churn_risk": [
+          "high"
+        ]
+      },
+      "offer_type": "statement_credit",
+      "value": "$50 statement credit",
+      "email_subject": "We Miss You - Here's $50 to Welcome You Back",
+      "email_body": "Dear {customer_name},\n\nWe've noticed you haven't used your card recently, and honestly, we miss you!\n\nTo show you how much we value your relationship, we're offering you a $50 statement credit when you make any purchase in the next 30 days.\n\nIt doesn't matter how small - even a coffee counts! Just use your card once, and $50 will be credited to your account.\n\nWe'd love to have you back.\n\nWarmly,\n{company_name}"
+    },
+    {
+      "offer_id": "OFF010",
+      "title": "Family Card Benefit",
+      "description": "Add a family member with no additional annual fee and shared rewards.",
+      "target_profile": {
+        "income_category": [
+          "$60K - $80K",
+          "$80K - $120K",
+          "$120K +"
+        ],
+        "card_category": [
+          "Silver",
+          "Gold",
+          "Platinum"
+        ],
+        "min_tenure_months": 12,
+        "churn_risk": [
+          "low",
+          "medium"
+        ]
+      },
+      "offer_type": "additional_card",
+      "value": "Free additional card",
+      "email_subject": "Share the Benefits with Your Family",
+      "email_body": "Dear {customer_name},\n\nGreat news for your family! You can now add a family member to your account with:\n\n\u2022 No additional annual fee\n\u2022 Shared rewards pool\n\u2022 Separate spending limits\n\u2022 Individual purchase notifications\n\nThis is perfect for a spouse, partner, or adult child. They'll enjoy all the same benefits while helping you earn rewards faster together.\n\nApply online in just 2 minutes or reply to this email.\n\nFor you and yours,\n{company_name}"
+    },
+    {
+      "offer_id": "OFF011",
+      "title": "Exclusive Partner Discounts",
+      "description": "Access to exclusive discounts at 500+ partner merchants for 6 months.",
+      "target_profile": {
+        "income_category": [
+          "Less than $40K",
+          "$40K - $60K",
+          "$60K - $80K"
+        ],
+        "card_category": [
+          "Blue",
+          "Silver"
+        ],
+        "min_tenure_months": 6,
+        "churn_risk": [
+          "medium",
+          "high"
+        ]
+      },
+      "offer_type": "partner_discount",
+      "value": "6 months partner discounts",
+      "email_subject": "Unlock Exclusive Discounts at 500+ Stores",
+      "email_body": "Dear {customer_name},\n\nStarting today, you have exclusive access to special discounts at over 500 partner merchants!\n\nSave on:\n\u2022 Dining: Up to 20% off at popular restaurants\n\u2022 Shopping: 15% off at major retailers\n\u2022 Travel: Special rates on hotels and car rentals\n\u2022 Entertainment: Discounted movie tickets and events\n\nSimply show your card or use promo code VALUED2024 at checkout.\n\nThis exclusive access is valid for 6 months. Start saving today!\n\nEnjoy,\n{company_name}"
+    },
+    {
+      "offer_id": "OFF012",
+      "title": "Priority Customer Support",
+      "description": "Skip the queue with dedicated priority support line access.",
+      "target_profile": {
+        "income_category": [
+          "$80K - $120K",
+          "$120K +"
+        ],
+        "card_category": [
+          "Gold",
+          "Platinum"
+        ],
+        "min_tenure_months": 24,
+        "churn_risk": [
+          "medium",
+          "high"
+        ]
+      },
+      "offer_type": "premium_service",
+      "value": "Priority support access",
+      "email_subject": "Your Dedicated Support Line is Now Active",
+      "email_body": "Dear {customer_name},\n\nYour time is valuable. That's why we've upgraded your account to include Priority Customer Support.\n\nYour benefits:\n\u2022 Dedicated phone line with <30 second wait times\n\u2022 Direct access to senior support specialists\n\u2022 Extended hours: 6 AM - 12 AM, 7 days a week\n\u2022 Callback option - we'll call you back if preferred\n\nYour priority number: 1-800-XXX-XXXX\nYour PIN: XXXX\n\nWe're here whenever you need us.\n\nAt your service,\n{company_name}"
+    },
+    {
+      "offer_id": "OFF013",
+      "title": "Payment Flexibility Plan",
+      "description": "Option to skip one payment or convert large purchases to installments.",
+      "target_profile": {
+        "income_category": [
+          "Less than $40K",
+          "$40K - $60K"
+        ],
+        "card_category": [
+          "Blue",
+          "Silver"
+        ],
+        "min_tenure_months": 12,
+        "churn_risk": [
+          "high"
+        ]
+      },
+      "offer_type": "payment_flexibility",
+      "value": "Skip payment or installment option",
+      "email_subject": "Need Some Flexibility? We've Got You Covered",
+      "email_body": "Dear {customer_name},\n\nLife happens, and we understand. That's why we're offering you some extra flexibility with your account.\n\nChoose one of these options:\n\n1. Skip-a-Payment: Skip your next payment with no penalty or late fee. Your account stays in good standing.\n\n2. Installment Plan: Convert any purchase over $100 into easy monthly installments with 0% interest for 6 months.\n\nTo activate either option, simply reply to this email or log into your account.\n\nWe're in this together.\n\nWith care,\n{company_name}"
+    },
+    {
+      "offer_id": "OFF014",
+      "title": "Travel Insurance Upgrade",
+      "description": "Complimentary comprehensive travel insurance for all trips booked with the card.",
+      "target_profile": {
+        "income_category": [
+          "$60K - $80K",
+          "$80K - $120K",
+          "$120K +"
+        ],
+        "card_category": [
+          "Silver",
+          "Gold",
+          "Platinum"
+        ],
+        "min_tenure_months": 12,
+        "churn_risk": [
+          "low",
+          "medium"
+        ]
+      },
+      "offer_type": "insurance",
+      "value": "Free travel insurance",
+      "email_subject": "Travel with Peace of Mind - Free Insurance Included",
+      "email_body": "Dear {customer_name},\n\nPlanning your next trip? Travel worry-free with our complimentary travel insurance!\n\nWhen you book with your card, you're automatically covered for:\n\u2022 Trip cancellation (up to $10,000)\n\u2022 Medical emergencies abroad (up to $500,000)\n\u2022 Lost or delayed baggage (up to $2,500)\n\u2022 Flight delays (up to $500)\n\nNo registration needed - coverage is automatic when you pay with your card.\n\nBon voyage!\n\n{company_name}"
+    },
+    {
+      "offer_id": "OFF015",
+      "title": "Personalized Financial Review",
+      "description": "One-on-one consultation with a financial advisor at no cost.",
+      "target_profile": {
+        "income_category": [
+          "$80K - $120K",
+          "$120K +"
+        ],
+        "card_category": [
+          "Gold",
+          "Platinum"
+        ],
+        "min_tenure_months": 24,
+        "churn_risk": [
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      "offer_type": "advisory",
+      "value": "Free financial consultation",
+      "email_subject": "Your Complimentary Financial Review Awaits",
+      "email_body": "Dear {customer_name},\n\nAs a valued customer, we'd like to offer you a complimentary one-on-one session with one of our certified financial advisors.\n\nIn this 45-minute consultation, you can discuss:\n\u2022 Investment strategies\n\u2022 Retirement planning\n\u2022 Tax optimization\n\u2022 Debt management\n\u2022 Any financial questions you have\n\nThis service normally costs $250 - it's our gift to you.\n\nBook your session: [link] or call 1-800-XXX-XXXX\n\nInvesting in your future,\n{company_name}"
+    }
+  ]
+}

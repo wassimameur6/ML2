@@ -1,0 +1,94 @@
+# Docker Compose configuration for Churn Prevention System
+# Production-ready with resource limits, health checks, and restart policies
+
+services:
+  serving-api:
+    build:
+      context: .
+      dockerfile: serving/Dockerfile.full
+    container_name: churn-api
+    platform: linux/arm64
+    ports:
+      - "8080:8080"
+    environment:
+      - ARTIFACTS_PATH=/app/artifacts
+      - CHROMA_PERSIST_DIR=/app/data/chroma_db
+      - DATA_PATH=/app/data
+      # OpenAI Configuration
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-3.5-turbo}
+      # Email Configuration
+      - SMTP_HOST=${SMTP_HOST:-smtp.gmail.com}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USER=${SMTP_USER:-}
+      - SMTP_PASSWORD=${SMTP_PASSWORD:-}
+      - SENDER_EMAIL=${SENDER_EMAIL:-}
+      - COMPANY_NAME=${COMPANY_NAME:-Premium Bank}
+      # Rate Limiting
+      - RATE_LIMIT_REQUESTS=${RATE_LIMIT_REQUESTS:-100}
+      - RATE_LIMIT_WINDOW=${RATE_LIMIT_WINDOW:-60}
+      # CORS (comma-separated origins)
+      - CORS_ORIGINS=${CORS_ORIGINS:-*}
+    networks:
+      - churn-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  webapp:
+    build:
+      context: ./webapp
+    container_name: churn-webapp
+    platform: linux/arm64
+    ports:
+      - "8501:8501"
+    environment:
+      - API_URL=http://serving-api:8080
+      - REQUEST_TIMEOUT=${REQUEST_TIMEOUT:-60}
+    depends_on:
+      serving-api:
+        condition: service_healthy
+    networks:
+      - churn-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  churn-network:
+    driver: bridge
+    name: churn-prevention-network
