@@ -64,7 +64,17 @@ This system combines classical machine learning (Random Forest classifier) with 
 ```bash
 cd ML2
 cp .env.example .env
-# Edit .env and add your OPENAI_API_KEY
+# Edit .env and add your OPENAI_API_KEY and OPENROUTER_API_KEY
+```
+
+### OpenRouter Setup (Client Chat)
+
+Add the following to your `.env` file to enable the client chat agent:
+
+```bash
+OPENROUTER_API_KEY=your_key_here
+OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
+OPENROUTER_MODEL=openai/gpt-4o-mini
 ```
 
 ### 2. Run with Docker
@@ -76,6 +86,7 @@ docker-compose up --build
 ### 3. Access
 
 - **Web UI**: http://localhost:8501
+- **Client Chat UI**: http://localhost:8502
 - **API Docs**: http://localhost:8080/docs
 - **Metrics**: http://localhost:8080/metrics
 
@@ -132,6 +143,10 @@ ML2/
 │   └── requirements.txt
 ├── webapp/                   # Streamlit frontend
 │   ├── app.py               # Web UI
+│   ├── client_app.py        # Client chat UI
+│   ├── client_api.py        # Client API helpers
+│   ├── client_ui.py         # Client UI components
+│   ├── client_styles.py     # Client UI styles
 │   ├── Dockerfile
 │   └── requirements.txt
 ├── artifacts/                # ML model files
@@ -157,6 +172,11 @@ ML2/
 |----------|-------------|---------|
 | `OPENAI_API_KEY` | OpenAI API key | (required) |
 | `OPENAI_MODEL` | Model for personalization | `gpt-3.5-turbo` |
+| `OPENROUTER_API_KEY` | OpenRouter API key (client chat) | (required for chat) |
+| `OPENROUTER_BASE_URL` | OpenRouter base URL | `https://openrouter.ai/api/v1` |
+| `OPENROUTER_MODEL` | OpenRouter model | `openai/gpt-4o-mini` |
+| `OPENROUTER_APP_URL` | OpenRouter app URL for telemetry | `http://localhost` |
+| `OPENROUTER_APP_TITLE` | OpenRouter app title | `Serfy Bank Client Service` |
 | `SMTP_HOST` | Email server | `smtp.gmail.com` |
 | `SMTP_PORT` | Email port | `587` |
 | `SMTP_USER` | Email username | (optional) |

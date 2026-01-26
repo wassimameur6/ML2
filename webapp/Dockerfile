@@ -6,6 +6,10 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app.py .
+COPY client_app.py .
+COPY client_api.py .
+COPY client_ui.py .
+COPY client_styles.py .
 
 ENV PYTHONUNBUFFERED=1
 

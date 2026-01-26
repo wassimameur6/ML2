@@ -17,6 +17,12 @@ services:
       # OpenAI Configuration
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - OPENAI_MODEL=${OPENAI_MODEL:-gpt-3.5-turbo}
+      # OpenRouter Configuration (Client Chat)
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
+      - OPENROUTER_BASE_URL=${OPENROUTER_BASE_URL:-https://openrouter.ai/api/v1}
+      - OPENROUTER_MODEL=${OPENROUTER_MODEL:-openai/gpt-4o-mini}
+      - OPENROUTER_APP_URL=${OPENROUTER_APP_URL:-http://localhost}
+      - OPENROUTER_APP_TITLE=${OPENROUTER_APP_TITLE:-Serfy Bank Client Service}
       # Email Configuration
       - SMTP_HOST=${SMTP_HOST:-smtp.gmail.com}
       - SMTP_PORT=${SMTP_PORT:-587}
@@ -70,6 +76,43 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  client-webapp:
+    build:
+      context: ./webapp
+    container_name: churn-client-webapp
+    platform: linux/arm64
+    ports:
+      - "8502:8502"
+    environment:
+      - API_URL=http://serving-api:8080
+      - REQUEST_TIMEOUT=${REQUEST_TIMEOUT:-60}
+    command: ["streamlit", "run", "client_app.py", "--server.port=8502", "--server.address=0.0.0.0"]
+    depends_on:
+      serving-api:
+        condition: service_healthy
+    networks:
+      - churn-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8502/_stcore/health"]
       interval: 30s
       timeout: 10s
       retries: 3

@@ -478,7 +478,7 @@ CLIENTNUM,First_Name,Last_Name,Email,Phone_Number,Attrition_Flag,Customer_Age,Ge
 717860358,Melissa,Morris,banktijari28@gmail.com,+1-786-979-5870,Existing Customer,40,F,3,High School,Single,$40K - $60K,Blue,36,5,3,2,5124.0,2235,2889.0,0.542,1158,42,0.355,0.436
 789337233,Nathan,Sanchez,banktijari28@gmail.com,+1-415-618-7929,Existing Customer,63,M,1,Graduate,Married,$40K - $60K,Blue,53,6,6,2,2880.0,2362,518.0,0.89,1323,26,0.444,0.82
 720902133,Samuel,Thomas,banktijari28@gmail.com,+1-818-538-2515,Existing Customer,58,M,1,High School,Single,$40K - $60K,Blue,46,4,1,0,5579.0,0,5579.0,0.481,1025,35,0.667,0.0
-721043058,Anthony,Edwards,banktijari28@gmail.com,+1-702-970-5725,Existing Customer,58,M,4,Unknown,Married,$60K - $80K,Blue,44,5,1,3,12010.0,2149,9861.0,0.801,1700,35,1.5,0.179
+721043058,Anthony,Edwards,oujghou4reda@gmail.com,+1-702-970-5725,Existing Customer,58,M,4,Unknown,Married,$60K - $80K,Blue,44,5,1,3,12010.0,2149,9861.0,0.801,1700,35,1.5,0.179
 711870333,Ronald,Jackson,banktijari28@gmail.com,+1-512-924-9156,Existing Customer,46,M,2,Uneducated,Divorced,$80K - $120K,Blue,36,6,3,3,34516.0,1597,32919.0,0.858,1628,51,1.217,0.046
 708398283,Sharon,Harris,banktijari28@gmail.com,+1-202-587-7140,Existing Customer,37,F,1,Graduate,Married,$40K - $60K,Blue,29,5,2,2,4394.0,885,3509.0,1.04,1377,32,0.684,0.201
 715878183,Peter,Green,banktijari28@gmail.com,+1-720-909-3675,Existing Customer,46,M,4,Graduate,Single,$80K - $120K,Blue,35,4,3,3,18325.0,723,17602.0,0.815,1517,33,0.65,0.039
@@ -649,7 +649,7 @@ CLIENTNUM,First_Name,Last_Name,Email,Phone_Number,Attrition_Flag,Customer_Age,Ge
 720923658,Joshua,Thompson,banktijari28@gmail.com,+1-786-535-9553,Existing Customer,48,M,3,Post-Graduate,Single,$60K - $80K,Blue,39,5,2,2,4734.0,954,3780.0,0.6,1570,45,0.452,0.202
 712710708,Larry,Miller,banktijari28@gmail.com,+1-415-746-3594,Existing Customer,55,M,2,High School,Single,$40K - $60K,Blue,36,5,2,0,6244.0,2517,3727.0,0.607,1445,40,0.29,0.403
 718939083,Ruth,Perez,banktijari28@gmail.com,+1-702-819-6587,Attrited Customer,54,F,2,Graduate,Married,Less than $40K,Blue,45,3,1,3,1438.3,306,1132.3,1.035,694,15,0.364,0.213
-779519058,Rachel,Hernandez,banktijari28@gmail.com,+1-469-297-6213,Existing Customer,51,F,3,Post-Graduate,Divorced,Unknown,Platinum,34,3,1,2,34516.0,1578,32938.0,0.725,1929,40,0.481,0.046
+779519058,Rachel,Hernandez,oulaiya2003@gmail.com,+1-469-297-6213,Existing Customer,51,F,3,Post-Graduate,Divorced,Unknown,Platinum,34,3,1,2,93969.81,1578,32938.0,0.725,1929,40,0.481,0.046
 719085933,Paul,Lopez,banktijari28@gmail.com,+1-202-714-9543,Existing Customer,35,M,3,Graduate,Single,$80K - $120K,Blue,24,4,1,2,23561.0,864,22697.0,1.373,2447,64,1.0,0.037
 715124958,Samuel,Campbell,banktijari28@gmail.com,+1-786-642-5777,Existing Customer,50,M,3,Uneducated,Single,$80K - $120K,Blue,36,5,2,3,24742.0,1676,23066.0,0.566,1306,31,0.55,0.068
 712979133,Jack,Torres,banktijari28@gmail.com,+1-512-964-4317,Attrited Customer,55,M,4,High School,Married,$80K - $120K,Blue,41,2,2,2,27560.0,900,26660.0,1.031,646,10,0.25,0.033

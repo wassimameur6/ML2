@@ -4,7 +4,6 @@ With AI Agent: RAG + LLM for intelligent offer selection and email generation
 """
 import os
 import sys
-import json
 from typing import List, Optional, Dict, Any
 from datetime import datetime
 from fastapi import FastAPI, HTTPException, Query, BackgroundTasks
@@ -21,6 +20,9 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from agent.churn_agent import ChurnAgent, CustomerProfile, PredictionResult, OfferRecommendation
 from agent.offer_vectorstore import OfferVectorStore
+from agent.customer_repository import CustomerRepository
+from agent.openrouter_client import OpenRouterClient
+from agent.client_chat_agent import ClientChatAgent
 
 
 app = FastAPI(
@@ -46,12 +48,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Data path for feedback storage
+DATA_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data')
+
 # Initialize AI Agent
 agent = ChurnAgent()
 vectorstore = OfferVectorStore()
-
-# Data path for feedback storage
-DATA_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data')
+customer_repo = CustomerRepository(DATA_PATH)
+openrouter_client = OpenRouterClient()
+client_chat_agent = ClientChatAgent(customer_repo, openrouter_client, agent.email_service)
 
 
 # ============================================================================
@@ -118,8 +123,16 @@ class CampaignRequest(BaseModel):
     risk_threshold: float = Field(default=0.5, ge=0, le=1)
     send_emails: bool = False
     max_customers: int = Field(default=100, ge=1, le=1000)
-    use_rag: bool = True
-    use_llm: bool = True
+
+
+class ClientChatRequest(BaseModel):
+    client_num: int = Field(..., description="Customer CLIENTNUM")
+    message: str = Field(..., min_length=1, max_length=2000)
+    history: Optional[List[Dict[str, Any]]] = None
+
+
+class ClientChatResponse(BaseModel):
+    message: str
 
 
 class CampaignResponse(BaseModel):
@@ -339,6 +352,29 @@ async def get_high_risk_customers(
         "threshold": threshold,
         "customers": high_risk
     }
+
+
+# ============================================================================
+# Client Chat Endpoint (OpenRouter)
+# ============================================================================
+
+@app.post("/client/chat", response_model=ClientChatResponse)
+async def client_chat(request: ClientChatRequest):
+    """Chat endpoint for client-facing UI using OpenRouter."""
+    try:
+        reply = await client_chat_agent.reply(
+            client_num=request.client_num,
+            message=request.message,
+            history=request.history,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except RuntimeError as exc:
+        raise HTTPException(status_code=501, detail=str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"OpenRouter request failed: {exc}") from exc
+
+    return ClientChatResponse(message=reply)
 
 
 # ============================================================================
