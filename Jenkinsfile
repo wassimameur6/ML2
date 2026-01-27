@@ -315,8 +315,10 @@ pipeline {
                 echo '🚀 Déploiement de l\'application...'
                 sh '''
                     echo "🗑️ Arrêt des conteneurs existants..."
+                    docker stop monitoring-reports 2>/dev/null || true
+                    docker rm monitoring-reports 2>/dev/null || true
                     docker compose down || true
-                    
+
                     echo ""
                     echo "🚀 Lancement des nouveaux conteneurs..."
                     docker compose up -d
