@@ -852,6 +852,93 @@ def _append_to_prod_data(feedback_entry: Dict):
     df.to_csv(prod_file, index=False)
 
 
+def _apply_offer_to_customer(feedback_entry: Dict):
+    """
+    Apply the accepted offer to the customer's record in churn2.csv.
+    Updates customer data based on the offer type.
+    """
+    import pandas as pd
+
+    if feedback_entry.get('feedback') != 'accept':
+        return  # Only apply if accepted
+
+    client_num = feedback_entry['client_num']
+    offer_id = feedback_entry['offer_id']
+
+    # Load offers to get offer details
+    offers_file = os.path.join(DATA_PATH, 'retention_offers.json')
+    try:
+        with open(offers_file, 'r') as f:
+            offers_data = json.load(f)
+            # Handle both {"offers": [...]} and [...] formats
+            offers = offers_data.get('offers', offers_data) if isinstance(offers_data, dict) else offers_data
+    except (FileNotFoundError, json.JSONDecodeError):
+        print(f"Could not load offers file")
+        return
+
+    # Find the offer
+    offer = next((o for o in offers if isinstance(o, dict) and o.get('offer_id') == offer_id), None)
+    if not offer:
+        print(f"Offer {offer_id} not found")
+        return
+
+    # Load customer data
+    churn_file = os.path.join(DATA_PATH, 'churn2.csv')
+    try:
+        df = pd.read_csv(churn_file)
+    except FileNotFoundError:
+        print(f"Could not load customer data file")
+        return
+
+    # Find customer
+    customer_mask = df['CLIENTNUM'] == client_num
+    if not customer_mask.any():
+        print(f"Customer {client_num} not found")
+        return
+
+    # Apply offer based on type
+    offer_type = offer.get('offer_type', '')
+
+    if offer_type == 'upgrade':
+        # Card upgrade: Blue -> Silver -> Gold -> Platinum
+        card_upgrade = {'Blue': 'Silver', 'Silver': 'Gold', 'Gold': 'Platinum', 'Platinum': 'Platinum'}
+        current_card = df.loc[customer_mask, 'Card_Category'].values[0]
+        df.loc[customer_mask, 'Card_Category'] = card_upgrade.get(current_card, current_card)
+
+    elif offer_type == 'credit_increase':
+        # Increase credit limit by 20%
+        df.loc[customer_mask, 'Credit_Limit'] = df.loc[customer_mask, 'Credit_Limit'] * 1.20
+
+    elif offer_type == 'rate_reduction':
+        # Lower utilization ratio (simulating lower rates = more spending power)
+        df.loc[customer_mask, 'Avg_Utilization_Ratio'] = df.loc[customer_mask, 'Avg_Utilization_Ratio'] * 0.85
+
+    elif offer_type == 'cashback':
+        # Increase transaction amount (customer uses card more for cashback)
+        df.loc[customer_mask, 'Total_Trans_Amt'] = df.loc[customer_mask, 'Total_Trans_Amt'] * 1.15
+        df.loc[customer_mask, 'Total_Trans_Ct'] = df.loc[customer_mask, 'Total_Trans_Ct'] * 1.10
+
+    elif offer_type == 'rewards':
+        # Increase transaction count (more engagement)
+        df.loc[customer_mask, 'Total_Trans_Ct'] = df.loc[customer_mask, 'Total_Trans_Ct'] * 1.15
+
+    elif offer_type == 'fee_waiver':
+        # Reduce months inactive (customer becomes more active)
+        df.loc[customer_mask, 'Months_Inactive_12_mon'] = max(0, df.loc[customer_mask, 'Months_Inactive_12_mon'].values[0] - 1)
+
+    elif offer_type == 'retention':
+        # General retention: reduce inactive months, increase transactions
+        df.loc[customer_mask, 'Months_Inactive_12_mon'] = max(0, df.loc[customer_mask, 'Months_Inactive_12_mon'].values[0] - 2)
+        df.loc[customer_mask, 'Total_Trans_Ct'] = df.loc[customer_mask, 'Total_Trans_Ct'] * 1.10
+
+    # Mark customer as "Existing Customer" if they were at risk (accepted retention offer)
+    df.loc[customer_mask, 'Attrition_Flag'] = 'Existing Customer'
+
+    # Save updated data
+    df.to_csv(churn_file, index=False)
+    print(f"Applied offer {offer_id} ({offer_type}) to customer {client_num}")
+
+
 @app.get("/feedback/{token}/{action}", response_class=HTMLResponse)
 async def process_feedback(token: str, action: str):
     """
@@ -897,6 +984,10 @@ async def process_feedback(token: str, action: str):
 
     # Append to prod_data.csv for future model retraining
     _append_to_prod_data(feedback_entry)
+
+    # Apply offer to customer data if accepted
+    if action == 'accept':
+        _apply_offer_to_customer(feedback_entry)
 
     # Return thank you page with Serfy Bank branding
     if action == 'accept':

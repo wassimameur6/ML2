@@ -1019,3 +1019,65 @@ code {
         grid-template-columns: 1fr;
     }
 }
+
+/* ========================================
+   AI Recommendation Section
+   ======================================== */
+
+.ai-section {
+    margin: 1.5rem 0;
+}
+
+.ai-recommendation-box {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: 1.5rem;
+    color: var(--white);
+    box-shadow: 0 4px 20px rgba(229, 162, 41, 0.15);
+}
+
+.ai-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.ai-icon {
+    font-size: 1.5rem;
+}
+
+.ai-header h3 {
+    color: var(--gold);
+    font-size: 1.1rem;
+    margin: 0;
+    flex: 1;
+}
+
+.ai-header .badge {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.ai-header .badge.rag {
+    background: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+    border: 1px solid #28a745;
+}
+
+.ai-header .badge.llm {
+    background: rgba(229, 162, 41, 0.2);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+}
+
+.ai-text {
+    color: #ccc;
+    line-height: 1.7;
+    font-size: 0.95rem;
+}

@@ -147,7 +147,7 @@ class EmailService:
         self.smtp_password = os.getenv('SMTP_PASSWORD', '')
         self.sender_email = os.getenv('SENDER_EMAIL', '')
         self.company_name = os.getenv('COMPANY_NAME', 'Premium Bank')
-        self.api_base_url = os.getenv('API_BASE_URL', 'http://localhost:8080')
+        self.api_base_url = os.getenv('API_BASE_URL', 'http://localhost:8000')
 
     def is_configured(self) -> bool:
         """Check if email service is properly configured"""

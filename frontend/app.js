@@ -2,7 +2,7 @@
 // Serfy Bank - JavaScript Application
 // ========================================
 
-const API_URL = 'http://localhost:8080';
+const API_URL = 'http://localhost:8000';
 
 // ========================================
 // Global State
@@ -390,10 +390,11 @@ async function searchCustomer() {
 
     showToast('Loading customer data...');
 
-    const [customer, prediction, recommendations] = await Promise.all([
+    const [customer, prediction, recommendations, aiRecommendation] = await Promise.all([
         apiCall(`/customers/${clientNum}`),
         apiCall(`/customers/${clientNum}/predict`),
-        apiCall(`/customers/${clientNum}/recommendations`)
+        apiCall(`/customers/${clientNum}/recommendations`),
+        apiCall(`/customers/${clientNum}/ai-recommendation`)
     ]);
 
     if (!customer) {
@@ -401,10 +402,10 @@ async function searchCustomer() {
         return;
     }
 
-    displayCustomerResult(customer, prediction, recommendations, clientNum);
+    displayCustomerResult(customer, prediction, recommendations, aiRecommendation, clientNum);
 }
 
-function displayCustomerResult(customer, prediction, recommendations, clientNum) {
+function displayCustomerResult(customer, prediction, recommendations, aiRecommendation, clientNum) {
     const container = document.getElementById('customer-result');
     container.classList.remove('hidden');
 
@@ -441,6 +442,22 @@ function displayCustomerResult(customer, prediction, recommendations, clientNum)
         `;
     }
 
+    // AI Recommendation (RAG-based)
+    if (aiRecommendation && aiRecommendation.ai_recommendation) {
+        const aiSection = document.getElementById('ai-recommendation') || createAiSection();
+        aiSection.innerHTML = `
+            <div class="ai-recommendation-box">
+                <div class="ai-header">
+                    <span class="ai-icon">🤖</span>
+                    <h3>AI-Powered Recommendation</h3>
+                    ${aiRecommendation.agent_pipeline?.rag_used ? '<span class="badge rag">RAG</span>' : ''}
+                    ${aiRecommendation.agent_pipeline?.llm_used ? '<span class="badge llm">LLM</span>' : ''}
+                </div>
+                <p class="ai-text">${aiRecommendation.ai_recommendation}</p>
+            </div>
+        `;
+    }
+
     // Recommendations
     if (recommendations && recommendations.length > 0) {
         document.getElementById('customer-offers').innerHTML = recommendations.slice(0, 3).map(offer => `
@@ -456,6 +473,15 @@ function displayCustomerResult(customer, prediction, recommendations, clientNum)
             </div>
         `).join('');
     }
+}
+
+function createAiSection() {
+    const section = document.createElement('div');
+    section.id = 'ai-recommendation';
+    section.className = 'ai-section';
+    const riskSection = document.getElementById('risk-analysis');
+    riskSection.parentNode.insertBefore(section, riskSection.nextSibling);
+    return section;
 }
 
 async function sendOffer(clientNum, offerId) {

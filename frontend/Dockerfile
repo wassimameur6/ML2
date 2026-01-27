@@ -17,6 +17,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application files
 COPY *.py ./
+COPY *.html ./
+COPY *.js ./
+COPY *.css ./
+COPY *.jpeg ./
 
 # Create streamlit config
 RUN mkdir -p ~/.streamlit && \
