@@ -305,29 +305,8 @@ pipeline {
         stage('🚀 Push to Docker Hub') {
             steps {
                 echo '🚀 Push des images vers Docker Hub...'
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', 
-                                                 usernameVariable: 'DOCKER_USER', 
-                                                 passwordVariable: 'DOCKER_PASS')]) {
-                    sh '''
-                        echo "🔐 Connexion à Docker Hub..."
-                        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-                        
-                        echo ""
-                        echo "📤 Push Backend image..."
-                        docker push ${DOCKER_HUB_REPO}/${BACKEND_IMAGE}:v${BUILD_NUMBER}
-                        docker push ${DOCKER_HUB_REPO}/${BACKEND_IMAGE}:latest
-                        
-                        echo ""
-                        echo "📤 Push Frontend image..."
-                        docker push ${DOCKER_HUB_REPO}/${FRONTEND_IMAGE}:v${BUILD_NUMBER}
-                        docker push ${DOCKER_HUB_REPO}/${FRONTEND_IMAGE}:latest
-                        
-                        echo ""
-                        echo "✅ Images poussées sur Docker Hub"
-                        echo "   Backend: ${DOCKER_HUB_REPO}/${BACKEND_IMAGE}:v${BUILD_NUMBER}"
-                        echo "   Frontend: ${DOCKER_HUB_REPO}/${FRONTEND_IMAGE}:v${BUILD_NUMBER}"
-                    '''
-                }
+                echo '⚠️ Skipping Docker Hub push - no credentials configured'
+                echo '💡 To enable: Add docker-hub-credentials in Jenkins Credentials'
             }
         }
         
