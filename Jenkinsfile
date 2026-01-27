@@ -315,11 +315,11 @@ pipeline {
                 echo '🚀 Déploiement de l\'application...'
                 sh '''
                     echo "🗑️ Arrêt des conteneurs existants..."
-                    docker-compose down || true
+                    docker compose down || true
                     
                     echo ""
                     echo "🚀 Lancement des nouveaux conteneurs..."
-                    docker-compose up -d
+                    docker compose up -d
                     
                     echo ""
                     echo "⏳ Attente du démarrage des services..."
@@ -327,7 +327,7 @@ pipeline {
                     
                     echo ""
                     echo "📊 État des conteneurs:"
-                    docker-compose ps
+                    docker compose ps
                     
                     echo "✅ Application déployée"
                 '''
