@@ -13,6 +13,8 @@ from dataclasses import dataclass
 from datetime import datetime
 import pandas as pd
 import numpy as np
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.compose import ColumnTransformer
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -362,9 +364,7 @@ class ChurnAgent:
         self.data_path = data_path or os.path.join(base_path, 'data')
 
         self.model = None
-        self.scaler = None
-        self.label_encoders = None
-        self.feature_cols = None
+        self.preprocessor = None
         self.offers = None
         self.customers_df = None
         self.vectorstore = None
@@ -379,17 +379,120 @@ class ChurnAgent:
 
     def _load_artifacts(self):
         """Load trained model and preprocessing artifacts"""
-        with open(os.path.join(self.artifacts_path, 'model.pickle'), 'rb') as f:
-            self.model = pickle.load(f)
+        # Load the new LightGBM pipeline model (SMOTE + LightGBM)
+        model_path = os.path.join(self.artifacts_path, 'best_model_final.pkl')
+        if os.path.exists(model_path):
+            with open(model_path, 'rb') as f:
+                self.model = pickle.load(f)
+            print("✅ Loaded LightGBM model (best_model_final.pkl)")
+        else:
+            # Fallback to old model
+            with open(os.path.join(self.artifacts_path, 'model.pickle'), 'rb') as f:
+                self.model = pickle.load(f)
+            print("⚠️ Using legacy Random Forest model (model.pickle)")
 
-        with open(os.path.join(self.artifacts_path, 'scaler.pickle'), 'rb') as f:
-            self.scaler = pickle.load(f)
+        # Build the preprocessor to match the training preprocessing
+        self._build_preprocessor()
 
-        with open(os.path.join(self.artifacts_path, 'label_encoders.pickle'), 'rb') as f:
-            self.label_encoders = pickle.load(f)
+    def _build_preprocessor(self):
+        """
+        Build preprocessor matching the training notebook:
+        - Feature engineering (5 new ratio features)
+        - Fill Unknown values
+        - StandardScaler for numerical columns
+        - OneHotEncoder(drop='first') for categorical columns
+        """
+        # Load data to fit the preprocessor
+        df = pd.read_csv(os.path.join(self.data_path, 'churn2.csv'))
+        df = self._preprocess_dataframe(df)
 
-        with open(os.path.join(self.artifacts_path, 'feature_cols.pickle'), 'rb') as f:
-            self.feature_cols = pickle.load(f)
+        X = df.drop(columns=['churn'], errors='ignore')
+
+        # Define column types
+        num_cols = X.select_dtypes(include=['int64', 'float64']).columns.tolist()
+        cat_cols = X.select_dtypes(include=['object', 'category']).columns.tolist()
+
+        # Store column names for later use
+        self.num_cols = num_cols
+        self.cat_cols = cat_cols
+
+        # Build ColumnTransformer matching the training notebook
+        self.preprocessor = ColumnTransformer(
+            transformers=[
+                ('num', StandardScaler(), num_cols),
+                ('cat', OneHotEncoder(drop='first', handle_unknown='ignore'), cat_cols)
+            ]
+        )
+
+        # Fit the preprocessor
+        self.preprocessor.fit(X)
+        print(f"✅ Preprocessor built: {len(num_cols)} numerical + {len(cat_cols)} categorical features")
+
+    def _preprocess_dataframe(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Apply the same preprocessing as the training notebook:
+        1. Lowercase column names
+        2. Drop unnamed column
+        3. Create churn target (if attrition_flag exists)
+        4. Fill Unknown values
+        5. Feature engineering (ratio features)
+        6. Keep only model features
+        """
+        df = df.copy()
+
+        # Lowercase column names
+        df.columns = df.columns.str.lower()
+
+        # Drop unnamed column if exists
+        if 'unnamed: 21' in df.columns:
+            df = df.drop(columns='unnamed: 21')
+
+        # Create churn target if attrition_flag exists
+        if 'attrition_flag' in df.columns:
+            df['churn'] = (df['attrition_flag'] == 'Attrited Customer').astype(int)
+            df = df.drop(columns='attrition_flag')
+
+        # Fill Unknown values (matching training notebook)
+        if 'marital_status' in df.columns:
+            df['marital_status'] = df['marital_status'].replace('Unknown', 'Married')
+        if 'income_category' in df.columns:
+            df['income_category'] = df['income_category'].replace('Unknown', 'Less than $40K')
+
+        # Feature engineering (matching training notebook)
+        if 'months_on_book' in df.columns and 'customer_age' in df.columns:
+            df['tenure_per_age'] = df['months_on_book'] / (df['customer_age'] * 12)
+        if 'avg_utilization_ratio' in df.columns and 'customer_age' in df.columns:
+            df['utilisation_per_age'] = df['avg_utilization_ratio'] / df['customer_age']
+        if 'credit_limit' in df.columns and 'customer_age' in df.columns:
+            df['credit_lim_per_age'] = df['credit_limit'] / df['customer_age']
+        if 'total_trans_amt' in df.columns and 'credit_limit' in df.columns:
+            df['total_trans_amt_per_credit_lim'] = df['total_trans_amt'] / df['credit_limit']
+        if 'total_trans_ct' in df.columns and 'credit_limit' in df.columns:
+            df['total_trans_ct_per_credit_lim'] = df['total_trans_ct'] / df['credit_limit']
+
+        # Keep only the columns used in training (drop extra columns like first_name, email, etc.)
+        model_features = [
+            # Numerical features
+            'customer_age', 'dependent_count', 'months_on_book', 'total_relationship_count',
+            'months_inactive_12_mon', 'contacts_count_12_mon', 'credit_limit', 'total_revolving_bal',
+            'avg_open_to_buy', 'total_amt_chng_q4_q1', 'total_trans_amt', 'total_trans_ct',
+            'total_ct_chng_q4_q1', 'avg_utilization_ratio',
+            # Engineered features
+            'tenure_per_age', 'utilisation_per_age', 'credit_lim_per_age',
+            'total_trans_amt_per_credit_lim', 'total_trans_ct_per_credit_lim',
+            # Categorical features
+            'gender', 'education_level', 'marital_status', 'income_category', 'card_category'
+        ]
+
+        # Add churn if present (for fitting purposes)
+        if 'churn' in df.columns:
+            model_features.append('churn')
+
+        # Select only model features that exist in the dataframe
+        available_features = [col for col in model_features if col in df.columns]
+        df = df[available_features]
+
+        return df
 
     def _load_data(self):
         """Load customer data and retention offers"""
@@ -437,24 +540,21 @@ class ChurnAgent:
         return sorted(high_risk, key=lambda x: x['churn_probability'], reverse=True)
 
     def _preprocess_features(self, customer_data: Dict) -> np.ndarray:
-        """Preprocess customer data for model prediction"""
+        """Preprocess customer data for model prediction using the new preprocessor"""
+        # Create DataFrame from customer data
         df = pd.DataFrame([customer_data])
 
-        categorical_cols = ['Gender', 'Education_Level', 'Marital_Status',
-                          'Income_Category', 'Card_Category']
+        # Apply the same preprocessing as training
+        df = self._preprocess_dataframe(df)
 
-        for col in categorical_cols:
-            if col in self.label_encoders and col in df.columns:
-                le = self.label_encoders[col]
-                try:
-                    df[col] = le.transform(df[col])
-                except ValueError:
-                    df[col] = 0
+        # Remove churn column if present (it's the target, not a feature)
+        if 'churn' in df.columns:
+            df = df.drop(columns='churn')
 
-        features = df[self.feature_cols].values
-        features_scaled = self.scaler.transform(features)
+        # Transform using the fitted preprocessor
+        features = self.preprocessor.transform(df)
 
-        return features_scaled
+        return features
 
     def predict(self, customer_data: Dict) -> PredictionResult:
         """Predict churn probability for a single customer"""
@@ -465,11 +565,26 @@ class ChurnAgent:
         return PredictionResult.from_probability(client_num, probability)
 
     def predict_batch(self, customers_df: pd.DataFrame) -> List[PredictionResult]:
-        """Predict churn for multiple customers"""
+        """Predict churn for multiple customers (vectorized for performance)"""
+        # Preprocess all customers at once
+        df_processed = self._preprocess_dataframe(customers_df.copy())
+
+        # Remove churn column if present
+        if 'churn' in df_processed.columns:
+            df_processed = df_processed.drop(columns='churn')
+
+        # Transform all at once
+        features = self.preprocessor.transform(df_processed)
+
+        # Predict all at once
+        probabilities = self.model.predict_proba(features)[:, 1]
+
+        # Create results
         results = []
-        for _, row in customers_df.iterrows():
-            result = self.predict(row.to_dict())
-            results.append(result)
+        client_nums = customers_df['CLIENTNUM'].values if 'CLIENTNUM' in customers_df.columns else range(len(customers_df))
+        for client_num, prob in zip(client_nums, probabilities):
+            results.append(PredictionResult.from_probability(int(client_num), float(prob)))
+
         return results
 
     # =========================================================================

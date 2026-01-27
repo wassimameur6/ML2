@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serfy Bank - Monitoring Reports</title>
+    <style>
+        /* ========================================
+           Serfy Bank Monitoring - Matching Frontend Design
+           ======================================== */
+
+        :root {
+            --gold: #E5A229;
+            --gold-dark: #C78B1F;
+            --gold-light: #F5E6C8;
+            --black: #1a1a1a;
+            --gray-900: #2c2c2c;
+            --gray-700: #555;
+            --gray-500: #888;
+            --gray-300: #ccc;
+            --gray-200: #e5e5e5;
+            --gray-100: #f5f5f5;
+            --white: #ffffff;
+            --success: #28a745;
+            --warning: #E5A229;
+            --danger: #dc3545;
+            --sidebar-width: 260px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--gray-100);
+            color: var(--black);
+            line-height: 1.5;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ========================================
+           Sidebar
+           ======================================== */
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--white);
+            border-right: 1px solid var(--gray-200);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+        }
+
+        .logo {
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .logo h1 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-top: 0.5rem;
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav {
+            flex: 1;
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 1.5rem;
+            color: var(--gray-700);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover {
+            background: var(--gray-100);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--white);
+        }
+
+        .nav-icon {
+            font-size: 1.1rem;
+        }
+
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        /* ========================================
+           Main Content
+           ======================================== */
+
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 2rem 3rem;
+            max-width: calc(100vw - var(--sidebar-width));
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .page-header h1 {
+            font-size: 1.75rem;
+            font-weight: 500;
+            color: var(--black);
+        }
+
+        .page-header p {
+            color: var(--gray-500);
+            margin-top: 0.25rem;
+        }
+
+        /* ========================================
+           KPI Cards
+           ======================================== */
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .kpi-label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-500);
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-value {
+            display: block;
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .kpi-value.success { color: var(--success); }
+        .kpi-value.warning { color: var(--warning); }
+
+        .kpi-sub {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            margin-top: 0.25rem;
+        }
+
+        /* ========================================
+           Section Headers
+           ======================================== */
+
+        .section-header {
+            margin: 2rem 0 1rem;
+        }
+
+        .section-header h2 {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--black);
+        }
+
+        /* ========================================
+           Report Cards
+           ======================================== */
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .report-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .report-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 4px 12px rgba(229, 162, 41, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .report-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .report-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .report-icon.drift {
+            background: #fff3cd;
+        }
+
+        .report-icon.performance {
+            background: #d4edda;
+        }
+
+        .report-icon.data {
+            background: #e7f3ff;
+        }
+
+        .report-icon.validation {
+            background: #f8d7da;
+        }
+
+        .report-icon.json {
+            background: var(--gray-100);
+        }
+
+        .report-card h3 {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--black);
+        }
+
+        .report-card .desc {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+            margin-bottom: 0.75rem;
+        }
+
+        .report-card .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.html {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge.json-badge {
+            background: #e7f3ff;
+            color: #0c5460;
+        }
+
+        /* ========================================
+           Info Box
+           ======================================== */
+
+        .info-box {
+            padding: 1rem 1.25rem;
+            background: var(--gold-light);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--gold-dark);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .info-box .info-icon {
+            font-size: 1.2rem;
+        }
+
+        /* ========================================
+           Status Indicators
+           ======================================== */
+
+        .status-bar {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--gray-700);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-dot.online {
+            background: var(--success);
+        }
+
+        .status-dot.offline {
+            background: var(--danger);
+        }
+
+        /* ========================================
+           Actions Row
+           ======================================== */
+
+        .actions-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: var(--gray-100);
+        }
+
+        .btn.primary {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border: none;
+            color: var(--white);
+        }
+
+        .btn.primary:hover {
+            box-shadow: 0 4px 12px rgba(229, 162, 41, 0.3);
+        }
+
+        .last-updated {
+            margin-left: auto;
+            font-size: 0.8rem;
+            color: var(--gray-500);
+        }
+
+        /* ========================================
+           Responsive
+           ======================================== */
+
+        @media (max-width: 1200px) {
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+            }
+            .sidebar .logo h1,
+            .sidebar .logo-subtitle,
+            .sidebar .nav-item span:not(.nav-icon) {
+                display: none;
+            }
+            .main-content {
+                margin-left: 70px;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <h1>Serfy Bank</h1>
+            <span class="logo-subtitle">Monitoring</span>
+        </div>
+
+        <nav class="nav">
+            <a href="/" class="nav-item active">
+                <span class="nav-icon">📊</span>
+                <span>Overview</span>
+            </a>
+            <a href="monitoring_report.html" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span>Data Drift</span>
+            </a>
+            <a href="performance_report.html" class="nav-item">
+                <span class="nav-icon">🎯</span>
+                <span>Performance</span>
+            </a>
+            <a href="deepchecks_summary.html" class="nav-item">
+                <span class="nav-icon">🔍</span>
+                <span>Deepchecks</span>
+            </a>
+            <a href="http://localhost:8501" class="nav-item">
+                <span class="nav-icon">🏠</span>
+                <span>Dashboard</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <span>v3.0</span>
+            <span>Monitoring</span>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="page-header">
+            <h1>Monitoring Reports</h1>
+            <p>Model performance, data drift detection, and quality validation</p>
+        </header>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-item">
+                <div class="status-dot online"></div>
+                Evidently AI
+            </div>
+            <div class="status-item">
+                <div class="status-dot online"></div>
+                Deepchecks
+            </div>
+            <div class="status-item">
+                <div class="status-dot online"></div>
+                ML Model
+            </div>
+            <div class="status-item">
+                <div class="status-dot online"></div>
+                Data Pipeline
+            </div>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <span class="kpi-label">Report Types</span>
+                <span class="kpi-value">2</span>
+                <span class="kpi-sub">Evidently + Deepchecks</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-label">Total Reports</span>
+                <span class="kpi-value warning">7</span>
+                <span class="kpi-sub">HTML + JSON</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-label">Model Status</span>
+                <span class="kpi-value success">Active</span>
+                <span class="kpi-sub">LightGBM (Tuned)</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-label">Pipeline</span>
+                <span class="kpi-value success">Healthy</span>
+                <span class="kpi-sub">All checks passing</span>
+            </div>
+        </div>
+
+        <!-- Info Box -->
+        <div class="info-box">
+            <span class="info-icon">💡</span>
+            Reports are generated automatically by the Jenkins CI/CD pipeline during each deployment cycle.
+        </div>
+
+        <!-- Evidently Reports Section -->
+        <div class="section-header">
+            <h2>Evidently AI Reports</h2>
+        </div>
+
+        <div class="reports-grid">
+            <a href="monitoring_report.html" class="report-card">
+                <div class="report-card-header">
+                    <div class="report-icon drift">📈</div>
+                    <div>
+                        <h3>Data Drift Report</h3>
+                    </div>
+                </div>
+                <p class="desc">Detects distribution shifts between reference and production data. Monitors feature-level drift using statistical tests.</p>
+                <span class="badge html">HTML Report</span>
+            </a>
+
+            <a href="performance_report.html" class="report-card">
+                <div class="report-card-header">
+                    <div class="report-icon performance">🎯</div>
+                    <div>
+                        <h3>Model Performance Report</h3>
+                    </div>
+                </div>
+                <p class="desc">Evaluates model accuracy, precision, recall, F1-score, and ROC-AUC metrics over time.</p>
+                <span class="badge html">HTML Report</span>
+            </a>
+
+            <a href="monitoring_tests.json" class="report-card">
+                <div class="report-card-header">
+                    <div class="report-icon json">📋</div>
+                    <div>
+                        <h3>Drift Tests Results</h3>
+                    </div>
+                </div>
+                <p class="desc">JSON output of drift detection test suite. Pass/fail status for each monitored feature.</p>
+                <span class="badge json-badge">JSON Data</span>
+            </a>
+
+            <a href="performance_metrics.json" class="report-card">
+                <div class="report-card-header">
+                    <div class="report-icon json">📋</div>
+                    <div>
+                        <h3>Performance Metrics</h3>
+                    </div>
+                </div>
+                <p class="desc">Raw performance metrics in JSON format for integration with external monitoring tools.</p>
+                <span class="badge json-badge">JSON Data</span>
+            </a>
+        </div>
+
+        <!-- Deepchecks Reports Section -->
+        <div class="section-header">
+            <h2>Deepchecks Validation Reports</h2>
+        </div>
+
+        <div class="reports-grid">
+            <a href="deepchecks_summary.html" class="report-card">
+                <div class="report-card-header">
+                    <div class="report-icon data">🔍</div>
+                    <div>
+                        <h3>Deepchecks Summary</h3>
+                    </div>
+                </div>
+                <p class="desc">Comprehensive overview of all data and model validation tests. Single-page summary of quality checks.</p>
+                <span class="badge html">HTML Report</span>
+            </a>
+
+            <a href="data_integrity_report.html" class="report-card">
+                <div class="report-card-header">
+                    <div class="report-icon validation">🛡️</div>
+                    <div>
+                        <h3>Data Integrity</h3>
+                    </div>
+                </div>
+                <p class="desc">Validates data quality: missing values, duplicates, type mismatches, outliers, and string anomalies.</p>
+                <span class="badge html">HTML Report</span>
+            </a>
+
+            <a href="train_test_validation_report.html" class="report-card">
+                <div class="report-card-header">
+                    <div class="report-icon drift">⚖️</div>
+                    <div>
+                        <h3>Train-Test Validation</h3>
+                    </div>
+                </div>
+                <p class="desc">Compares training and test data distributions. Detects data leakage and feature drift between splits.</p>
+                <span class="badge html">HTML Report</span>
+            </a>
+
+            <a href="model_evaluation_report.html" class="report-card">
+                <div class="report-card-header">
+                    <div class="report-icon performance">📊</div>
+                    <div>
+                        <h3>Model Evaluation</h3>
+                    </div>
+                </div>
+                <p class="desc">In-depth model evaluation: confusion matrix, ROC curve, calibration, and performance by segment.</p>
+                <span class="badge html">HTML Report</span>
+            </a>
+        </div>
+
+        <!-- Actions Row -->
+        <div class="actions-row">
+            <a href="http://localhost:8501" class="btn primary">🏠 Back to Dashboard</a>
+            <a href="http://localhost:8000/docs" class="btn">📄 API Docs</a>
+            <a href="http://localhost:8000/health" class="btn">🏥 Health Check</a>
+            <span class="last-updated">Serfy Bank Monitoring Portal</span>
+        </div>
+    </main>
+</body>
+</html>

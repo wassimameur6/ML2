@@ -2,18 +2,18 @@
 # Production-ready with resource limits, health checks, and restart policies
 
 services:
-  serving-api:
+  backend:
     build:
-      context: .
-      dockerfile: serving/Dockerfile.full
-    container_name: churn-api
-    platform: linux/arm64
+      context: ./backend/src
+      dockerfile: Dockerfile
+    container_name: churn-prediction-backend
     ports:
-      - "8080:8080"
+      - "8000:8000"
+    volumes:
+      # Mount data folder for customer data, offers, and ChromaDB
+      - ./data:/app/data
     environment:
-      - ARTIFACTS_PATH=/app/artifacts
-      - CHROMA_PERSIST_DIR=/app/data/chroma_db
-      - DATA_PATH=/app/data
+      - PYTHONUNBUFFERED=1
       # OpenAI Configuration
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - OPENAI_MODEL=${OPENAI_MODEL:-gpt-3.5-turbo}
@@ -29,48 +29,30 @@ services:
       - SMTP_USER=${SMTP_USER:-}
       - SMTP_PASSWORD=${SMTP_PASSWORD:-}
       - SENDER_EMAIL=${SENDER_EMAIL:-}
-      - COMPANY_NAME=${COMPANY_NAME:-Premium Bank}
-      # Rate Limiting
-      - RATE_LIMIT_REQUESTS=${RATE_LIMIT_REQUESTS:-100}
-      - RATE_LIMIT_WINDOW=${RATE_LIMIT_WINDOW:-60}
-      # CORS (comma-separated origins)
-      - CORS_ORIGINS=${CORS_ORIGINS:-*}
+      - COMPANY_NAME=${COMPANY_NAME:-Serfy Bank}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
     networks:
       - churn-network
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: 2G
-        reservations:
-          cpus: '0.5'
-          memory: 512M
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
 
-  webapp:
+  frontend:
     build:
-      context: ./webapp
-    container_name: churn-webapp
-    platform: linux/arm64
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: churn-prediction-frontend
     ports:
       - "8501:8501"
-    environment:
-      - API_URL=http://serving-api:8080
-      - REQUEST_TIMEOUT=${REQUEST_TIMEOUT:-60}
     depends_on:
-      serving-api:
+      backend:
         condition: service_healthy
+    environment:
+      - PYTHONUNBUFFERED=1
+      - API_URL=http://backend:8000
     networks:
       - churn-network
     restart: unless-stopped
@@ -80,58 +62,19 @@ services:
       timeout: 10s
       retries: 3
       start_period: 30s
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 1G
-        reservations:
-          cpus: '0.25'
-          memory: 256M
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
 
-  client-webapp:
+  # Monitoring service (Evidently reports)
+  monitoring:
     build:
-      context: ./webapp
-    container_name: churn-client-webapp
-    platform: linux/arm64
+      context: ./monitoring
+      dockerfile: Dockerfile
+    container_name: churn-monitoring
     ports:
-      - "8502:8502"
-    environment:
-      - API_URL=http://serving-api:8080
-      - REQUEST_TIMEOUT=${REQUEST_TIMEOUT:-60}
-    command: ["streamlit", "run", "client_app.py", "--server.port=8502", "--server.address=0.0.0.0"]
-    depends_on:
-      serving-api:
-        condition: service_healthy
+      - "9000:80"
     networks:
       - churn-network
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8502/_stcore/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 1G
-        reservations:
-          cpus: '0.25'
-          memory: 256M
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
 
 networks:
   churn-network:
     driver: bridge
-    name: churn-prevention-network

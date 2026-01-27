@@ -9,196 +9,147 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from agent.churn_agent import (
-    ChurnPreventionAgent,
-    get_agent,
-    reset_agent,
-    retry_with_backoff,
-    CircuitBreaker
+    ChurnAgent,
+    CustomerProfile,
+    PredictionResult,
+    OfferRecommendation,
+    EmailService
 )
 
 
-class TestCircuitBreaker:
-    """Tests for the CircuitBreaker class."""
+class TestCustomerProfile:
+    """Tests for the CustomerProfile class."""
 
-    def test_initial_state_is_closed(self):
-        """Circuit breaker should start in closed state."""
-        cb = CircuitBreaker(failure_threshold=3, reset_timeout=60)
-        assert cb.state == "closed"
-        assert cb.can_execute() is True
-
-    def test_opens_after_threshold_failures(self):
-        """Circuit breaker should open after threshold failures."""
-        cb = CircuitBreaker(failure_threshold=3, reset_timeout=60)
-
-        for _ in range(3):
-            cb.record_failure()
-
-        assert cb.state == "open"
-        assert cb.can_execute() is False
-
-    def test_success_resets_failures(self):
-        """Recording success should reset failure count."""
-        cb = CircuitBreaker(failure_threshold=3, reset_timeout=60)
-
-        cb.record_failure()
-        cb.record_failure()
-        cb.record_success()
-
-        assert cb.failures == 0
-        assert cb.state == "closed"
-
-
-class TestRetryDecorator:
-    """Tests for the retry_with_backoff decorator."""
-
-    def test_successful_function_returns_immediately(self):
-        """Function that succeeds should return without retry."""
-        call_count = 0
-
-        @retry_with_backoff(max_retries=3, base_delay=0.01)
-        def successful_func():
-            nonlocal call_count
-            call_count += 1
-            return "success"
-
-        result = successful_func()
-        assert result == "success"
-        assert call_count == 1
-
-    def test_retries_on_failure(self):
-        """Function should retry on failure."""
-        call_count = 0
-
-        @retry_with_backoff(max_retries=3, base_delay=0.01)
-        def failing_then_success():
-            nonlocal call_count
-            call_count += 1
-            if call_count < 3:
-                raise ValueError("Temporary error")
-            return "success"
-
-        result = failing_then_success()
-        assert result == "success"
-        assert call_count == 3
-
-    def test_raises_after_max_retries(self):
-        """Should raise exception after max retries exhausted."""
-        call_count = 0
-
-        @retry_with_backoff(max_retries=3, base_delay=0.01)
-        def always_fails():
-            nonlocal call_count
-            call_count += 1
-            raise ValueError("Permanent error")
-
-        with pytest.raises(ValueError):
-            always_fails()
-
-        assert call_count == 3
-
-
-class TestChurnPreventionAgent:
-    """Tests for the ChurnPreventionAgent class."""
-
-    @pytest.fixture(autouse=True)
-    def setup(self):
-        """Reset agent before each test."""
-        reset_agent()
-        yield
-        reset_agent()
-
-    def test_singleton_returns_same_instance(self):
-        """get_agent should return the same instance."""
-        # Skip if no API key
-        if not os.getenv("OPENAI_API_KEY"):
-            pytest.skip("OPENAI_API_KEY not set")
-
-        agent1 = get_agent()
-        agent2 = get_agent()
-        assert agent1 is agent2
-
-    def test_agent_requires_api_key(self):
-        """Agent should raise error if no API key."""
-        # Temporarily remove API key
-        original_key = os.environ.pop("OPENAI_API_KEY", None)
-
-        try:
-            with pytest.raises(ValueError, match="OPENAI_API_KEY"):
-                ChurnPreventionAgent(initialize_db=False)
-        finally:
-            # Restore API key
-            if original_key:
-                os.environ["OPENAI_API_KEY"] = original_key
-
-    def test_retrieve_best_offers(self):
-        """Test offer retrieval from vector store."""
-        # Skip if no API key
-        if not os.getenv("OPENAI_API_KEY"):
-            pytest.skip("OPENAI_API_KEY not set")
-
-        agent = get_agent()
-
-        customer_profile = {
-            "income_category": "$60K - $80K",
-            "card_category": "Blue",
-            "months_on_book": 36,
-            "churn_probability": 0.8,
-            "age": 45,
-            "total_trans_amt": 5000
+    def test_from_dict(self):
+        """Test creating CustomerProfile from dictionary."""
+        data = {
+            "CLIENTNUM": 123456789,
+            "First_Name": "John",
+            "Last_Name": "Doe",
+            "Email": "john@example.com",
+            "Phone_Number": "555-1234",
+            "Customer_Age": 45,
+            "Gender": "M",
+            "Dependent_count": 2,
+            "Education_Level": "Graduate",
+            "Marital_Status": "Married",
+            "Income_Category": "$60K - $80K",
+            "Card_Category": "Blue",
+            "Months_on_book": 36,
+            "Total_Relationship_Count": 4,
+            "Months_Inactive_12_mon": 2,
+            "Contacts_Count_12_mon": 3,
+            "Credit_Limit": 10000.0,
+            "Total_Revolving_Bal": 1500.0,
+            "Avg_Open_To_Buy": 8500.0,
+            "Total_Amt_Chng_Q4_Q1": 1.5,
+            "Total_Trans_Amt": 5000.0,
+            "Total_Trans_Ct": 50,
+            "Total_Ct_Chng_Q4_Q1": 1.2,
+            "Avg_Utilization_Ratio": 0.15
         }
 
-        offers, retrieval_time = agent.retrieve_best_offers(customer_profile)
+        profile = CustomerProfile.from_dict(data)
 
-        assert isinstance(offers, list)
-        assert len(offers) > 0
-        assert retrieval_time >= 0
+        assert profile.client_num == 123456789
+        assert profile.first_name == "John"
+        assert profile.last_name == "Doe"
+        assert profile.age == 45
+        assert profile.income_category == "$60K - $80K"
 
-    def test_usage_stats_tracking(self):
-        """Test that usage stats are tracked."""
-        # Skip if no API key
+    def test_full_name(self):
+        """Test full_name property."""
+        data = {"First_Name": "Jane", "Last_Name": "Smith"}
+        profile = CustomerProfile.from_dict(data)
+        assert profile.full_name == "Jane Smith"
+
+    def test_to_description(self):
+        """Test natural language description generation."""
+        data = {
+            "Income_Category": "$60K - $80K",
+            "Card_Category": "Blue",
+            "Months_on_book": 36,
+            "Months_Inactive_12_mon": 1,
+            "Total_Trans_Amt": 6000,
+            "Avg_Utilization_Ratio": 0.3,
+            "Credit_Limit": 10000,
+            "Customer_Age": 45,
+            "Marital_Status": "Married"
+        }
+        profile = CustomerProfile.from_dict(data)
+        desc = profile.to_description()
+
+        assert "$60K - $80K" in desc
+        assert "Blue" in desc
+        assert "36 months" in desc
+
+
+class TestPredictionResult:
+    """Tests for the PredictionResult class."""
+
+    def test_low_risk_classification(self):
+        """Test low risk classification."""
+        result = PredictionResult.from_probability(123, 0.2)
+        assert result.churn_risk == "low"
+        assert result.is_churning is False
+
+    def test_medium_risk_classification(self):
+        """Test medium risk classification."""
+        result = PredictionResult.from_probability(123, 0.45)
+        assert result.churn_risk == "medium"
+        assert result.is_churning is False
+
+    def test_high_risk_classification(self):
+        """Test high risk classification."""
+        result = PredictionResult.from_probability(123, 0.8)
+        assert result.churn_risk == "high"
+        assert result.is_churning is True
+
+    def test_boundary_churning_threshold(self):
+        """Test churning boundary at 0.5."""
+        result_below = PredictionResult.from_probability(123, 0.49)
+        result_at = PredictionResult.from_probability(123, 0.5)
+
+        assert result_below.is_churning is False
+        assert result_at.is_churning is True
+
+
+class TestChurnAgent:
+    """Tests for the ChurnAgent class."""
+
+    def test_agent_initialization(self):
+        """Test agent initializes without error when API key is present."""
         if not os.getenv("OPENAI_API_KEY"):
             pytest.skip("OPENAI_API_KEY not set")
 
-        agent = get_agent()
-        stats = agent.get_usage_stats()
+        agent = ChurnAgent()
+        assert agent is not None
+        assert agent.model is not None
 
-        assert "total_tokens_used" in stats
-        assert "total_requests" in stats
-        assert "model" in stats
-        assert "circuit_breaker_state" in stats
-
-
-class TestFallbackPersonalization:
-    """Tests for fallback personalization when OpenAI is unavailable."""
-
-    def test_fallback_returns_valid_response(self):
-        """Fallback should return a valid response structure."""
-        # Skip if no API key
+    def test_agent_has_email_service(self):
+        """Test agent has email service configured."""
         if not os.getenv("OPENAI_API_KEY"):
             pytest.skip("OPENAI_API_KEY not set")
 
-        agent = get_agent()
+        agent = ChurnAgent()
+        assert agent.email_service is not None
 
-        offer = {
-            "offer_id": "test_001",
-            "title": "Test Offer",
-            "email_subject": "Special offer from {company_name}",
-            "email_body": "Dear customer, thank you for {tenure} months with us."
-        }
 
-        customer_data = {
-            "months_on_book": 24
-        }
+class TestEmailService:
+    """Tests for the EmailService class."""
 
-        result = agent._fallback_personalization(
-            offer, customer_data,
-            offer["email_subject"], offer["email_body"]
-        )
+    def test_email_service_configuration(self):
+        """Test email service reads environment variables."""
+        service = EmailService()
+        assert service.smtp_host == os.getenv('SMTP_HOST', 'smtp.gmail.com')
+        assert service.smtp_port == int(os.getenv('SMTP_PORT', 587))
 
-        assert result["success"] is True
-        assert result["fallback"] is True
-        assert result["offer_id"] == "test_001"
-        assert "Premium Bank" in result["subject"]
+    def test_is_configured(self):
+        """Test is_configured returns correct status."""
+        service = EmailService()
+        # Should be configured if SMTP_USER is set
+        expected = bool(os.getenv('SMTP_USER', ''))
+        assert service.is_configured() == expected
 
 
 if __name__ == "__main__":

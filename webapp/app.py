@@ -431,32 +431,9 @@ def main():
         # Navigation
         menu = st.radio(
             "Navigation",
-            ["Dashboard", "Customers", "At-Risk", "Campaigns", "Offers", "Settings"],
+            ["Dashboard", "Customers", "At-Risk", "Campaigns", "Offers", "Client Chat"],
             label_visibility="collapsed"
         )
-
-        st.markdown("---")
-
-        # System status
-        st.markdown("**System Status**")
-        health = api_call("/health")
-        if health:
-            status_items = [
-                ("ML Model", health.get('model_loaded', False)),
-                ("AI Engine", health.get('vectorstore_ready', False)),
-                ("Email", health.get('email_configured', False)),
-                ("OpenAI", health.get('openai_configured', False))
-            ]
-            for name, status in status_items:
-                color = "status-online" if status else "status-offline"
-                st.markdown(f"""
-                <div class="status-item">
-                    <div class="status-dot {color}"></div>
-                    {name}
-                </div>
-                """, unsafe_allow_html=True)
-        else:
-            st.error("API Offline")
 
         st.markdown("---")
         st.caption(f"v3.0 • {datetime.now().strftime('%H:%M')}")
@@ -472,8 +449,8 @@ def main():
         show_campaigns()
     elif menu == "Offers":
         show_offers()
-    elif menu == "Settings":
-        show_settings()
+    elif menu == "Client Chat":
+        show_client_chat()
 
 
 def show_dashboard():
@@ -957,7 +934,8 @@ def show_at_risk():
 
     col1, col2, col3 = st.columns([2, 1, 1])
     with col1:
-        threshold = st.slider("Minimum risk threshold", 0.0, 1.0, 0.5, 0.05, format="%.0f%%")
+        threshold_pct = st.slider("Minimum risk threshold", 0, 100, 50, 5, format="%d%%")
+        threshold = threshold_pct / 100.0  # Convert to decimal for API
     with col2:
         limit = st.number_input("Max results", 10, 500, 50)
     with col3:
@@ -1015,16 +993,26 @@ def show_campaigns():
     </div>
     """, unsafe_allow_html=True)
 
-    # Stats
+    # Get real stats from feedback data
+    feedback_stats = api_call("/feedback-stats")
+    if feedback_stats:
+        total_sent = feedback_stats.get('total_emails', 0)
+        completed = feedback_stats.get('completed', 0)
+        accepted = feedback_stats.get('accepted', 0)
+        response_rate = (completed / total_sent * 100) if total_sent > 0 else 0
+        retention_rate = (accepted / completed * 100) if completed > 0 else 0
+    else:
+        total_sent, completed, accepted, response_rate, retention_rate = 0, 0, 0, 0, 0
+
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.metric("This Month", "12")
+        st.metric("Total Emails", f"{total_sent:,}")
     with col2:
-        st.metric("Emails Sent", "1,247")
+        st.metric("Responses", f"{completed:,}")
     with col3:
-        st.metric("Response Rate", "34%")
+        st.metric("Response Rate", f"{response_rate:.0f}%")
     with col4:
-        st.metric("Retention", "78%")
+        st.metric("Acceptance Rate", f"{retention_rate:.0f}%")
 
     st.markdown("---")
 
@@ -1035,7 +1023,8 @@ def show_campaigns():
 
     with col1:
         st.markdown("**Automatic Targeting**")
-        risk_threshold = st.slider("Target risk above", 0.0, 1.0, 0.6, 0.05, format="%.0f%%")
+        risk_threshold_pct = st.slider("Target risk above", 0, 100, 60, 5, format="%d%%")
+        risk_threshold = risk_threshold_pct / 100.0  # Convert to decimal for API
         max_customers = st.number_input("Max customers", 1, 1000, 50)
 
     with col2:
@@ -1188,6 +1177,143 @@ def show_settings():
         st.markdown("---")
         st.markdown("##### Model Info")
         st.caption("Random Forest • 19 features • 10,127 training samples")
+
+
+def show_client_chat():
+    """Client-facing chat interface for customer service"""
+    st.markdown("""
+    <div class="page-header">
+        <h1 class="page-title">Client Service Chat</h1>
+        <p class="page-subtitle">AI-powered customer support assistant</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Initialize session state for chat
+    if 'chat_client_num' not in st.session_state:
+        st.session_state.chat_client_num = None
+    if 'chat_client_profile' not in st.session_state:
+        st.session_state.chat_client_profile = None
+    if 'chat_history' not in st.session_state:
+        st.session_state.chat_history = []
+
+    def reset_chat():
+        st.session_state.chat_client_num = None
+        st.session_state.chat_client_profile = None
+        st.session_state.chat_history = []
+
+    # If not logged in, show login form
+    if not st.session_state.chat_client_profile:
+        col1, col2 = st.columns([1, 1])
+
+        with col1:
+            st.markdown("""
+            ##### How it works
+
+            1. **Identify** - Enter customer's CLIENTNUM to load their profile
+            2. **Chat** - Customer can ask about their account, card, or services
+            3. **Resolve** - AI can help change email, request credit limit increase, etc.
+
+            ##### Available Actions
+            - View account information
+            - Change email address (with verification)
+            - Request credit limit increase
+            - Get personalized advice
+            """)
+
+        with col2:
+            st.markdown("##### Customer Login")
+            with st.form("client_login_form", clear_on_submit=False):
+                client_num_input = st.text_input("CLIENTNUM", placeholder="e.g., 768805383")
+                submitted = st.form_submit_button("Start Chat", type="primary", use_container_width=True)
+
+            if submitted:
+                if not client_num_input.strip().isdigit():
+                    st.error("Please enter a valid numeric CLIENTNUM.")
+                else:
+                    with st.spinner("Loading customer profile..."):
+                        profile = api_call(f"/customers/{int(client_num_input)}")
+                    if not profile:
+                        st.error("Customer not found. Please check the CLIENTNUM.")
+                    else:
+                        st.session_state.chat_client_num = int(client_num_input)
+                        st.session_state.chat_client_profile = profile
+                        st.success(f"Welcome {profile.get('First_Name', '')} {profile.get('Last_Name', '')}!")
+                        st.rerun()
+    else:
+        # Show chat interface
+        profile = st.session_state.chat_client_profile
+        client_name = f"{profile.get('First_Name', '')} {profile.get('Last_Name', '')}"
+
+        # Header with customer info and logout
+        col1, col2 = st.columns([4, 1])
+        with col1:
+            st.markdown(f"""
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px; border-left:4px solid #E5A229;">
+                <strong>{client_name}</strong> • ID: {st.session_state.chat_client_num}<br>
+                <span style="color:#666; font-size:0.9rem;">
+                    {profile.get('Card_Category', 'N/A')} Card • {profile.get('Income_Category', 'N/A')}
+                </span>
+            </div>
+            """, unsafe_allow_html=True)
+        with col2:
+            if st.button("End Chat", use_container_width=True):
+                reset_chat()
+                st.rerun()
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        # Chat welcome message if no history
+        if not st.session_state.chat_history:
+            st.markdown(f"""
+            <div style="background:#FDF8EF; padding:1.5rem; border-radius:12px; border:1px solid #F5E6C8; margin-bottom:1rem;">
+                <h4 style="margin:0 0 0.5rem 0;">Hello {profile.get('First_Name', 'there')}! How can I help you today?</h4>
+                <p style="color:#666; margin:0;">Try asking:</p>
+                <div style="margin-top:0.75rem;">
+                    <span style="display:inline-block; background:#fff; border:1px solid #e5e5e5; padding:0.4rem 0.8rem; border-radius:20px; margin:0.25rem; font-size:0.85rem;">What is my credit limit?</span>
+                    <span style="display:inline-block; background:#fff; border:1px solid #e5e5e5; padding:0.4rem 0.8rem; border-radius:20px; margin:0.25rem; font-size:0.85rem;">Change my email address</span>
+                    <span style="display:inline-block; background:#fff; border:1px solid #e5e5e5; padding:0.4rem 0.8rem; border-radius:20px; margin:0.25rem; font-size:0.85rem;">Increase my credit limit</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        # Display chat history
+        for message in st.session_state.chat_history:
+            role = message.get("role", "assistant")
+            content = message.get("content", "")
+            with st.chat_message(role):
+                st.write(content)
+
+        # Chat input
+        prompt = st.chat_input("Type your message...")
+        if prompt:
+            # Add user message to history
+            st.session_state.chat_history.append({"role": "user", "content": prompt})
+
+            # Send to API
+            with st.spinner("Thinking..."):
+                try:
+                    response = requests.post(
+                        f"{API_URL}/client/chat",
+                        json={
+                            "client_num": st.session_state.chat_client_num,
+                            "message": prompt,
+                            "history": st.session_state.chat_history[:-1]
+                        },
+                        timeout=30
+                    )
+                    if response.ok:
+                        data = response.json()
+                        assistant_text = data.get("message", "I'm here to help. What would you like to know?")
+                    elif response.status_code == 501:
+                        assistant_text = "The chat service is being set up. Please check back soon or contact support directly."
+                    else:
+                        assistant_text = "Sorry, I couldn't process your request. Please try again."
+                except requests.RequestException:
+                    assistant_text = "Sorry, the chat service is temporarily unavailable. Please try again later."
+
+            # Add assistant response to history
+            st.session_state.chat_history.append({"role": "assistant", "content": assistant_text})
+            st.rerun()
 
 
 if __name__ == "__main__":

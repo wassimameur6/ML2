@@ -1,0 +1,3 @@
+client_num,offer_id,churn_probability,feedback,timestamp
+708508758,OFF005,0.97,accept,2026-01-24T17:01:41.269082
+708508758,OFF005,0.97,accept,2026-01-24T17:06:26.611294

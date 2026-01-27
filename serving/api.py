@@ -643,17 +643,21 @@ async def process_feedback(token: str, action: str):
 
 
 @app.get("/feedback/stats")
+@app.get("/feedback-stats")
 async def get_feedback_stats():
     """Get feedback statistics for Human-in-the-Loop monitoring"""
     pending = _load_pending_feedback()
 
     total = len(pending)
+    completed = sum(1 for f in pending.values() if f.get('status') == 'completed')
     accepted = sum(1 for f in pending.values() if f.get('feedback') == 'accept')
     declined = sum(1 for f in pending.values() if f.get('feedback') == 'decline')
     pending_count = sum(1 for f in pending.values() if f.get('status') == 'pending')
 
     return {
+        "total_emails": total,
         "total_sent": total,
+        "completed": completed,
         "accepted": accepted,
         "declined": declined,
         "pending_response": pending_count,
