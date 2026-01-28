@@ -94,7 +94,7 @@ model_metadata = {}
 
 # Initialize AI Agent
 agent = ChurnAgent()
-vectorstore = OfferVectorStore()
+vectorstore = OfferVectorStore(data_path=DATA_PATH)
 customer_repo = CustomerRepository(DATA_PATH)
 openrouter_client = OpenRouterClient()
 client_chat_agent = ClientChatAgent(customer_repo, openrouter_client, agent.email_service)
@@ -799,12 +799,8 @@ async def run_retention_campaign(request: CampaignRequest):
         customer_ids=request.customer_ids,
         risk_threshold=request.risk_threshold,
         send_emails=request.send_emails,
-        use_rag=request.use_rag,
-        use_llm=request.use_llm
+        max_customers=request.max_customers
     )
-
-    if request.max_customers and len(result['campaign_details']) > request.max_customers:
-        result['campaign_details'] = result['campaign_details'][:request.max_customers]
 
     return CampaignResponse(**result)
 

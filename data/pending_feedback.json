@@ -78,5 +78,973 @@
     "status": "completed",
     "feedback": "accept",
     "feedback_timestamp": "2026-01-27T21:02:39.117206"
+  },
+  "712396908_OFF005_b1884148": {
+    "client_num": 712396908,
+    "customer_name": "Brenda Williams",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF005",
+    "churn_probability": 0.0498351619555733,
+    "churn_risk": "low",
+    "timestamp": "2026-01-27T23:31:03.042385",
+    "status": "completed",
+    "feedback": "accept",
+    "feedback_timestamp": "2026-01-27T23:31:27.304072"
+  },
+  "709986633_OFF001_eddd9f93": {
+    "client_num": 709986633,
+    "customer_name": "Justin Jackson",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9949608858103729,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:43:55.994048",
+    "status": "pending"
+  },
+  "719363283_OFF009_d0400a35": {
+    "client_num": 719363283,
+    "customer_name": "Rachel Lewis",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9949463009300181,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:43:59.577696",
+    "status": "pending"
+  },
+  "710592933_OFF001_6e101a2c": {
+    "client_num": 710592933,
+    "customer_name": "Deborah Rivera",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9949265167335434,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:44:03.572241",
+    "status": "pending"
+  },
+  "751450008_OFF001_27a48974": {
+    "client_num": 751450008,
+    "customer_name": "James Jones",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9949177654743259,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:44:08.911443",
+    "status": "pending"
+  },
+  "827691858_OFF001_67bfa93b": {
+    "client_num": 827691858,
+    "customer_name": "Barbara Walker",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.994873385998609,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:44:12.443234",
+    "status": "pending"
+  },
+  "720673008_OFF009_b36982ca": {
+    "client_num": 720673008,
+    "customer_name": "Donna Johnson",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9947657673412444,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:44:15.631421",
+    "status": "pending"
+  },
+  "719776608_OFF009_f7a473d9": {
+    "client_num": 719776608,
+    "customer_name": "Benjamin Mitchell",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9944216117198731,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:44:18.631529",
+    "status": "pending"
+  },
+  "783364233_OFF001_0e70b8b1": {
+    "client_num": 783364233,
+    "customer_name": "Justin Rodriguez",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9944149659210777,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:44:21.939917",
+    "status": "pending"
+  },
+  "770871708_OFF001_ca6fd0b6": {
+    "client_num": 770871708,
+    "customer_name": "Jason Lee",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9942688597685371,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:44:25.422388",
+    "status": "pending"
+  },
+  "720462633_OFF001_12007dc3": {
+    "client_num": 720462633,
+    "customer_name": "Amanda Lee",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9942560928329814,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:44:29.299896",
+    "status": "pending"
+  },
+  "719358333_OFF009_0d650f6a": {
+    "client_num": 719358333,
+    "customer_name": "Kenneth Martinez",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9941823244631777,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:44:33.705077",
+    "status": "pending"
+  },
+  "715956258_OFF001_27c33055": {
+    "client_num": 715956258,
+    "customer_name": "Linda Torres",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.994003302637889,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:44:37.671243",
+    "status": "pending"
+  },
+  "788965683_OFF009_6737e094": {
+    "client_num": 788965683,
+    "customer_name": "Betty Thompson",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9936507597097042,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:44:41.867273",
+    "status": "pending"
+  },
+  "804598908_OFF009_58bc692a": {
+    "client_num": 804598908,
+    "customer_name": "Timothy Miller",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9934944942748813,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:44:47.702548",
+    "status": "pending"
+  },
+  "787541883_OFF001_1bfe59e9": {
+    "client_num": 787541883,
+    "customer_name": "Joshua Murphy",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9932886408609237,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:44:52.003315",
+    "status": "pending"
+  },
+  "713910108_OFF001_54029d4f": {
+    "client_num": 713910108,
+    "customer_name": "Steven Thomas",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9932725171849408,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:44:56.101825",
+    "status": "pending"
+  },
+  "801373833_OFF009_60953948": {
+    "client_num": 801373833,
+    "customer_name": "Adam Harris",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9932521373830789,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:44:59.993406",
+    "status": "pending"
+  },
+  "716436483_OFF009_8d36fd3f": {
+    "client_num": 716436483,
+    "customer_name": "Sandra Garcia",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9930315526013965,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:45:03.691680",
+    "status": "pending"
+  },
+  "816325533_OFF009_ba103512": {
+    "client_num": 816325533,
+    "customer_name": "Linda Roberts",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.99283252468731,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:45:08.954316",
+    "status": "pending"
+  },
+  "818929158_OFF001_342184b7": {
+    "client_num": 818929158,
+    "customer_name": "Benjamin Morris",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9928161896548399,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:45:13.137442",
+    "status": "pending"
+  },
+  "716984658_OFF001_646c7502": {
+    "client_num": 716984658,
+    "customer_name": "Aaron Hill",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9927891962373164,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:45:18.844551",
+    "status": "pending"
+  },
+  "709879458_OFF001_d712454d": {
+    "client_num": 709879458,
+    "customer_name": "Victoria Harris",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.992616829213225,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:45:22.605392",
+    "status": "pending"
+  },
+  "710809833_OFF001_4bb079ec": {
+    "client_num": 710809833,
+    "customer_name": "Larry Rodriguez",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9924756865433896,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:45:27.781162",
+    "status": "pending"
+  },
+  "711173883_OFF009_ded7ab4e": {
+    "client_num": 711173883,
+    "customer_name": "Nathan Evans",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9923618558064201,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:45:31.186289",
+    "status": "pending"
+  },
+  "721051908_OFF001_eae1a1ba": {
+    "client_num": 721051908,
+    "customer_name": "Steven Hill",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9923497322289401,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:45:36.403334",
+    "status": "pending"
+  },
+  "719466558_OFF001_7c03c5ae": {
+    "client_num": 719466558,
+    "customer_name": "Susan Baker",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9922506270236673,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:45:40.448294",
+    "status": "pending"
+  },
+  "717678408_OFF001_2fabf7a0": {
+    "client_num": 717678408,
+    "customer_name": "Patricia Gonzalez",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9922142732063066,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:45:44.127737",
+    "status": "pending"
+  },
+  "711757383_OFF001_6e721f86": {
+    "client_num": 711757383,
+    "customer_name": "Olivia Turner",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9920091057010211,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:45:47.864408",
+    "status": "pending"
+  },
+  "711574008_OFF001_f9b6bccc": {
+    "client_num": 711574008,
+    "customer_name": "Ronald Campbell",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9919134354186631,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:45:51.821357",
+    "status": "pending"
+  },
+  "711836733_OFF001_d5062eec": {
+    "client_num": 711836733,
+    "customer_name": "Andrew Nguyen",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9918855881948091,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:45:55.536880",
+    "status": "pending"
+  },
+  "719591283_OFF009_d543efba": {
+    "client_num": 719591283,
+    "customer_name": "Robert Gonzalez",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9917972780843956,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:45:59.856533",
+    "status": "pending"
+  },
+  "809818008_OFF001_e4e96ad0": {
+    "client_num": 809818008,
+    "customer_name": "Raymond Flores",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9916673992386035,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:46:03.377962",
+    "status": "pending"
+  },
+  "779749908_OFF001_f0c42e53": {
+    "client_num": 779749908,
+    "customer_name": "Michael Wilson",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.991639665314802,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:46:07.554885",
+    "status": "pending"
+  },
+  "714574083_OFF009_85d81fb4": {
+    "client_num": 714574083,
+    "customer_name": "Janet Rodriguez",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9915732422730269,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:46:11.473070",
+    "status": "pending"
+  },
+  "714878508_OFF001_bd028d4a": {
+    "client_num": 714878508,
+    "customer_name": "Kimberly Robinson",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9911626514659361,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:46:15.219980",
+    "status": "pending"
+  },
+  "806637558_OFF001_8c74a914": {
+    "client_num": 806637558,
+    "customer_name": "Larry Taylor",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.99113284911837,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:46:19.957423",
+    "status": "pending"
+  },
+  "788485908_OFF001_b81a0e49": {
+    "client_num": 788485908,
+    "customer_name": "Donald Nelson",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9911109600260453,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:46:23.460143",
+    "status": "pending"
+  },
+  "718345233_OFF009_f95dae39": {
+    "client_num": 718345233,
+    "customer_name": "Victoria Lewis",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9909453668546372,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:46:26.809068",
+    "status": "pending"
+  },
+  "719806233_OFF001_ac8ebbbe": {
+    "client_num": 719806233,
+    "customer_name": "Nathan Wilson",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9909140460406696,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:46:30.053836",
+    "status": "pending"
+  },
+  "718476033_OFF001_1f08adf8": {
+    "client_num": 718476033,
+    "customer_name": "Julie Wilson",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.990885551454579,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:46:34.788179",
+    "status": "pending"
+  },
+  "714770808_OFF006_8cecaa26": {
+    "client_num": 714770808,
+    "customer_name": "Raymond Phillips",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF006",
+    "churn_probability": 0.9906728244035987,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:46:37.837305",
+    "status": "pending"
+  },
+  "721129383_OFF009_225146ce": {
+    "client_num": 721129383,
+    "customer_name": "Melissa Adams",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9906161637349635,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:46:41.055474",
+    "status": "pending"
+  },
+  "716565258_OFF001_d2925b53": {
+    "client_num": 716565258,
+    "customer_name": "Daniel Lee",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9905574241590653,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:46:45.155795",
+    "status": "pending"
+  },
+  "789893808_OFF001_d2cae23a": {
+    "client_num": 789893808,
+    "customer_name": "Ronald Harris",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9905453785526867,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:46:48.852085",
+    "status": "pending"
+  },
+  "766006758_OFF009_6c6b2913": {
+    "client_num": 766006758,
+    "customer_name": "Kevin Rivera",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9903971990913926,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:46:52.729341",
+    "status": "pending"
+  },
+  "806894133_OFF009_4cbd8140": {
+    "client_num": 806894133,
+    "customer_name": "Margaret Campbell",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9903865234754202,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:46:56.312017",
+    "status": "pending"
+  },
+  "737952333_OFF009_936b5a2d": {
+    "client_num": 737952333,
+    "customer_name": "Peter Allen",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9903222048806398,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:47:00.000520",
+    "status": "pending"
+  },
+  "715511658_OFF001_bd4b72dd": {
+    "client_num": 715511658,
+    "customer_name": "Elizabeth Walker",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9901986533013943,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:47:05.428427",
+    "status": "pending"
+  },
+  "715764483_OFF001_09f1000b": {
+    "client_num": 715764483,
+    "customer_name": "Emily Clark",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9901562245954268,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:47:10.036406",
+    "status": "pending"
+  },
+  "717705858_OFF001_14da129b": {
+    "client_num": 717705858,
+    "customer_name": "Edward Hernandez",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9899566903210492,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:47:14.231899",
+    "status": "pending"
+  },
+  "813380058_OFF003_0b241b1b": {
+    "client_num": 813380058,
+    "customer_name": "Janet Martin",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF003",
+    "churn_probability": 0.9897969500296787,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:47:18.220449",
+    "status": "pending"
+  },
+  "711349083_OFF001_3f6917de": {
+    "client_num": 711349083,
+    "customer_name": "Lisa Hall",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9893941387809042,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:47:21.603344",
+    "status": "pending"
+  },
+  "720611058_OFF001_c0c2836e": {
+    "client_num": 720611058,
+    "customer_name": "Alexander Ramirez",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9893936789588851,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:47:25.106773",
+    "status": "pending"
+  },
+  "780276258_OFF001_1d94ff2b": {
+    "client_num": 780276258,
+    "customer_name": "Scott Thomas",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9893909188884819,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:47:30.177209",
+    "status": "pending"
+  },
+  "772935108_OFF001_7db80f30": {
+    "client_num": 772935108,
+    "customer_name": "Frank Baker",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9889182015668767,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:47:34.613575",
+    "status": "pending"
+  },
+  "712851108_OFF001_8e1f2bbb": {
+    "client_num": 712851108,
+    "customer_name": "Catherine Stewart",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9888858358446195,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:47:38.662198",
+    "status": "pending"
+  },
+  "717237708_OFF001_f582a389": {
+    "client_num": 717237708,
+    "customer_name": "Mark Torres",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9888406772851028,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:47:43.465723",
+    "status": "pending"
+  },
+  "714779733_OFF009_0f8cfb38": {
+    "client_num": 714779733,
+    "customer_name": "Brian Wilson",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9887663525927298,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:47:47.188879",
+    "status": "pending"
+  },
+  "714670533_OFF001_05d503ff": {
+    "client_num": 714670533,
+    "customer_name": "Paul Edwards",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9887497130544964,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:47:52.277458",
+    "status": "pending"
+  },
+  "718563483_OFF001_293d483f": {
+    "client_num": 718563483,
+    "customer_name": "Douglas Parker",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9885260771281811,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:47:55.562306",
+    "status": "pending"
+  },
+  "788465583_OFF009_ef2d6c70": {
+    "client_num": 788465583,
+    "customer_name": "Kimberly Evans",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9884407029235979,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:48:00.824678",
+    "status": "pending"
+  },
+  "778627983_OFF009_e259ef69": {
+    "client_num": 778627983,
+    "customer_name": "Barbara Thompson",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9882051303979394,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:48:05.842315",
+    "status": "pending"
+  },
+  "753606108_OFF009_5b29ab8e": {
+    "client_num": 753606108,
+    "customer_name": "Eric Harris",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9880805554187808,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:48:09.449335",
+    "status": "pending"
+  },
+  "803776533_OFF009_dd92f720": {
+    "client_num": 803776533,
+    "customer_name": "Alexander Campbell",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9880225367741934,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:48:13.800634",
+    "status": "pending"
+  },
+  "778855383_OFF001_51116a3e": {
+    "client_num": 778855383,
+    "customer_name": "Nancy Nelson",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9877479396831237,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:48:17.103748",
+    "status": "pending"
+  },
+  "710263608_OFF001_e342b769": {
+    "client_num": 710263608,
+    "customer_name": "Elizabeth Clark",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9874283089048306,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:48:20.485075",
+    "status": "pending"
+  },
+  "710787708_OFF009_05409b90": {
+    "client_num": 710787708,
+    "customer_name": "Michelle Turner",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9873460700640067,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:48:24.604200",
+    "status": "pending"
+  },
+  "720113433_OFF001_92709ad4": {
+    "client_num": 720113433,
+    "customer_name": "Benjamin Clark",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9871075433747267,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:48:27.842707",
+    "status": "pending"
+  },
+  "713134458_OFF001_410255b6": {
+    "client_num": 713134458,
+    "customer_name": "Gregory Hall",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9871068535087374,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:48:31.925962",
+    "status": "pending"
+  },
+  "709855608_OFF001_3c747edb": {
+    "client_num": 709855608,
+    "customer_name": "Nancy White",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.986900440800523,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:48:36.478650",
+    "status": "pending"
+  },
+  "710096658_OFF009_496cf342": {
+    "client_num": 710096658,
+    "customer_name": "Brenda Cook",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9864453072212116,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:48:40.258436",
+    "status": "pending"
+  },
+  "710194683_OFF001_54475444": {
+    "client_num": 710194683,
+    "customer_name": "Dennis Miller",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9863040215912898,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:48:43.927132",
+    "status": "pending"
+  },
+  "772264383_OFF001_5491607b": {
+    "client_num": 772264383,
+    "customer_name": "Edward Jackson",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9862729490056474,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:48:48.026285",
+    "status": "pending"
+  },
+  "827055333_OFF001_8ff1d08d": {
+    "client_num": 827055333,
+    "customer_name": "Michael Rivera",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9862258853666277,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:48:51.639485",
+    "status": "pending"
+  },
+  "805259733_OFF001_37a1ea0c": {
+    "client_num": 805259733,
+    "customer_name": "Betty Morris",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9860282906023481,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:48:55.195291",
+    "status": "pending"
+  },
+  "719038008_OFF009_10de7bee": {
+    "client_num": 719038008,
+    "customer_name": "Laura Thompson",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9857733843818665,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:48:59.370739",
+    "status": "pending"
+  },
+  "716620458_OFF001_079edd98": {
+    "client_num": 716620458,
+    "customer_name": "Douglas Young",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9853362532948834,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:49:02.845233",
+    "status": "pending"
+  },
+  "713786508_OFF001_974c02a1": {
+    "client_num": 713786508,
+    "customer_name": "Rachel Lopez",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9852444255591664,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:49:07.488399",
+    "status": "pending"
+  },
+  "713580633_OFF001_ae0416b8": {
+    "client_num": 713580633,
+    "customer_name": "Daniel Carter",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9850773469890031,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:49:11.579266",
+    "status": "pending"
+  },
+  "708355683_OFF001_85721848": {
+    "client_num": 708355683,
+    "customer_name": "Maria Campbell",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9849968110295837,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:49:15.194136",
+    "status": "pending"
+  },
+  "714916758_OFF001_cf5b7f02": {
+    "client_num": 714916758,
+    "customer_name": "Carol Thompson",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9849588707659108,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:49:19.033883",
+    "status": "pending"
+  },
+  "708193008_OFF001_6258a428": {
+    "client_num": 708193008,
+    "customer_name": "Thomas Miller",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9849529303831162,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:49:23.098425",
+    "status": "pending"
+  },
+  "770769483_OFF009_8bed1f19": {
+    "client_num": 770769483,
+    "customer_name": "Charles Carter",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9848794381485287,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:49:26.357448",
+    "status": "pending"
+  },
+  "709986633_OFF009_fb93f684": {
+    "client_num": 709986633,
+    "customer_name": "Justin Jackson",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9949608858103729,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:51:52.452763",
+    "status": "pending"
+  },
+  "719363283_OFF001_9bef7b78": {
+    "client_num": 719363283,
+    "customer_name": "Rachel Lewis",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9949463009300181,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:51:56.627468",
+    "status": "pending"
+  },
+  "710592933_OFF001_8c83580b": {
+    "client_num": 710592933,
+    "customer_name": "Deborah Rivera",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9949265167335434,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:52:00.534054",
+    "status": "pending"
+  },
+  "751450008_OFF001_087e5e4a": {
+    "client_num": 751450008,
+    "customer_name": "James Jones",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9949177654743259,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:52:04.937651",
+    "status": "pending"
+  },
+  "827691858_OFF009_03b8734c": {
+    "client_num": 827691858,
+    "customer_name": "Barbara Walker",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.994873385998609,
+    "churn_risk": "high",
+    "timestamp": "2026-01-27T23:52:09.645654",
+    "status": "completed",
+    "feedback": "accept",
+    "feedback_timestamp": "2026-01-28T09:52:43.618643"
+  },
+  "779471883_OFF005_f201601e": {
+    "client_num": 779471883,
+    "customer_name": "Joyce Scott",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF005",
+    "churn_probability": 0.9995580216970604,
+    "churn_risk": "high",
+    "timestamp": "2026-01-28T07:33:45.946719",
+    "status": "pending"
+  },
+  "778493808_OFF005_197325ab": {
+    "client_num": 778493808,
+    "customer_name": "Charles Nelson",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF005",
+    "churn_probability": 0.17162146785483182,
+    "churn_risk": "low",
+    "timestamp": "2026-01-28T10:37:52.632393",
+    "status": "completed",
+    "feedback": "accept",
+    "feedback_timestamp": "2026-01-28T10:38:37.615760"
+  },
+  "709986633_OFF009_324dfff4": {
+    "client_num": 709986633,
+    "customer_name": "Justin Jackson",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.9949608858103729,
+    "churn_risk": "high",
+    "timestamp": "2026-01-28T10:40:50.781848",
+    "status": "pending"
+  },
+  "719363283_OFF001_021548b6": {
+    "client_num": 719363283,
+    "customer_name": "Rachel Lewis",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9949463009300181,
+    "churn_risk": "high",
+    "timestamp": "2026-01-28T10:40:54.467692",
+    "status": "pending"
+  },
+  "710592933_OFF001_1343812a": {
+    "client_num": 710592933,
+    "customer_name": "Deborah Rivera",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9949265167335434,
+    "churn_risk": "high",
+    "timestamp": "2026-01-28T10:40:59.384421",
+    "status": "pending"
+  },
+  "751450008_OFF001_dfbeda56": {
+    "client_num": 751450008,
+    "customer_name": "James Jones",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF001",
+    "churn_probability": 0.9949177654743259,
+    "churn_risk": "high",
+    "timestamp": "2026-01-28T10:41:03.477014",
+    "status": "pending"
+  },
+  "827691858_OFF009_d4f8a22a": {
+    "client_num": 827691858,
+    "customer_name": "Barbara Walker",
+    "email": "banktijari28@gmail.com",
+    "offer_id": "OFF009",
+    "churn_probability": 0.994873385998609,
+    "churn_risk": "high",
+    "timestamp": "2026-01-28T10:41:07.166493",
+    "status": "completed",
+    "feedback": "accept",
+    "feedback_timestamp": "2026-01-28T10:42:17.271052"
   }
 }

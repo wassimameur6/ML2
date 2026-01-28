@@ -547,12 +547,13 @@ class ChurnAgent:
         return self.customers_df.to_dict('records')
 
     def get_high_risk_customers(self, threshold: float = 0.5) -> List[Dict]:
-        """Get customers with high churn risk"""
+        """Get existing customers with high churn risk (excludes already attrited)"""
         predictions = self.predict_batch(self.customers_df)
         high_risk = [
             {**row, 'churn_probability': pred.churn_probability, 'churn_risk': pred.churn_risk}
             for row, pred in zip(self.customers_df.to_dict('records'), predictions)
-            if pred.churn_probability >= threshold
+            if threshold <= pred.churn_probability < 0.995
+            and row.get('Attrition_Flag', '') != 'Attrited Customer'
         ]
         return sorted(high_risk, key=lambda x: x['churn_probability'], reverse=True)
 
@@ -1007,7 +1008,8 @@ Provide a brief (2-3 sentences) explanation of why the top offer was selected an
         risk_threshold: float = 0.5,
         send_emails: bool = False,
         use_rag: bool = True,
-        use_llm: bool = True
+        use_llm: bool = True,
+        max_customers: int = 5
     ) -> Dict[str, Any]:
         """
         Run AI-powered retention campaign:
@@ -1020,7 +1022,7 @@ Provide a brief (2-3 sentences) explanation of why the top offer was selected an
             customers = [self.get_customer(cid) for cid in customer_ids if self.get_customer(cid)]
         else:
             high_risk = self.get_high_risk_customers(risk_threshold)
-            customers = [CustomerProfile.from_dict(c) for c in high_risk[:100]]
+            customers = [CustomerProfile.from_dict(c) for c in high_risk[:max_customers]]
 
         results = {
             'total_customers': len(customers),

@@ -431,7 +431,7 @@ def main():
         # Navigation
         menu = st.radio(
             "Navigation",
-            ["Dashboard", "Customers", "At-Risk", "Batch Analysis", "Campaigns", "Offers", "Client Chat"],
+            ["Dashboard", "Customers", "At-Risk", "Campaigns", "Offers", "Client Chat"],
             label_visibility="collapsed"
         )
 
@@ -445,8 +445,6 @@ def main():
         show_customers()
     elif menu == "At-Risk":
         show_at_risk()
-    elif menu == "Batch Analysis":
-        show_batch_analysis()
     elif menu == "Campaigns":
         show_campaigns()
     elif menu == "Offers":
@@ -474,8 +472,6 @@ def show_dashboard():
         st.info(f"API URL: {API_URL}")
         return
 
-    st.success(f"✓ Connected to API - {stats['total_customers']} customers loaded")
-
     # ===== ROW 1: KPI Cards with sparklines =====
     col1, col2, col3, col4, col5 = st.columns(5)
 
@@ -495,7 +491,7 @@ def show_dashboard():
         <div class="card" style="text-align:center;">
             <div class="card-header">RETENTION RATE</div>
             <div class="card-value" style="color:#28a745;">{retention_rate:.1%}</div>
-            <div style="color:#28a745; font-size:0.8rem;">↑ 2.1% vs last quarter</div>
+            <div style="color:#888; font-size:0.8rem;">Current rate</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -504,7 +500,7 @@ def show_dashboard():
         <div class="card" style="text-align:center;">
             <div class="card-header">CHURN RATE</div>
             <div class="card-value" style="color:#dc3545;">{stats['attrition_rate']:.1%}</div>
-            <div style="color:#28a745; font-size:0.8rem;">↓ 2.1% improvement</div>
+            <div style="color:#888; font-size:0.8rem;">Current rate</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -519,65 +515,42 @@ def show_dashboard():
         """, unsafe_allow_html=True)
 
     with col5:
-        potential_loss = at_risk_count * 2450  # Avg customer value
+        feedback = stats.get('feedback_stats', {})
+        emails_sent = feedback.get('total_emails_sent', 0)
         st.markdown(f"""
         <div class="card" style="text-align:center;">
-            <div class="card-header">REVENUE AT RISK</div>
-            <div class="card-value" style="color:#dc3545;">${potential_loss/1000:.0f}K</div>
-            <div style="color:#888; font-size:0.8rem;">Est. annual value</div>
+            <div class="card-header">EMAILS SENT</div>
+            <div class="card-value" style="color:#E5A229;">{emails_sent}</div>
+            <div style="color:#888; font-size:0.8rem;">Retention campaigns</div>
         </div>
         """, unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
     # ===== ROW 2: Main Charts =====
-    col1, col2 = st.columns([2, 1])
+    col1, col2 = st.columns([3, 2])
 
     with col1:
-        st.markdown("##### Churn Trend Analysis")
+        st.markdown("##### Customer Overview")
 
-        # Create comprehensive trend chart
-        months = pd.date_range(end=datetime.now(), periods=12, freq='M')
-        month_labels = [m.strftime('%b %y') for m in months]
+        existing = stats['existing_customers']
+        attrited = stats['attrited_customers']
 
-        # Simulated realistic data
-        churn_rates = [18.2, 17.8, 17.5, 17.2, 17.0, 16.8, 16.9, 16.5, 16.3, 16.4, 16.2, stats['attrition_rate']*100]
-        retention_rates = [100 - r for r in churn_rates]
-
-        fig = go.Figure()
-
-        # Retention area
-        fig.add_trace(go.Scatter(
-            x=month_labels, y=retention_rates,
-            name='Retention Rate',
-            fill='tozeroy',
-            fillcolor='rgba(40, 167, 69, 0.1)',
-            line=dict(color='#28a745', width=2),
-            mode='lines'
-        ))
-
-        # Churn line
-        fig.add_trace(go.Scatter(
-            x=month_labels, y=churn_rates,
-            name='Churn Rate',
-            line=dict(color='#dc3545', width=2, dash='dot'),
-            mode='lines+markers',
-            marker=dict(size=6)
-        ))
-
-        # Target line
-        fig.add_hline(y=15, line_dash="dash", line_color="#E5A229",
-                      annotation_text="Target: 15%", annotation_position="right")
+        fig = go.Figure(data=[go.Bar(
+            x=['Existing Customers', 'Attrited Customers'],
+            y=[existing, attrited],
+            marker_color=['#28a745', '#dc3545'],
+            text=[f"{existing:,}", f"{attrited:,}"],
+            textposition='outside'
+        )])
 
         fig.update_layout(
-            height=300,
-            margin=dict(l=0, r=0, t=10, b=0),
+            height=420,
+            margin=dict(l=0, r=0, t=20, b=20),
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
-            xaxis=dict(showgrid=False, showline=True, linecolor='#e8e8e8'),
-            yaxis=dict(showgrid=True, gridcolor='#f5f5f5', range=[0, 100], ticksuffix='%'),
-            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
-            hovermode='x unified'
+            xaxis=dict(showgrid=False),
+            yaxis=dict(showgrid=True, gridcolor='#f5f5f5'),
         )
         st.plotly_chart(fig, use_container_width=True)
 
@@ -610,102 +583,15 @@ def show_dashboard():
             )
 
             fig.update_layout(
-                height=300,
-                margin=dict(l=0, r=0, t=10, b=0),
+                height=420,
+                margin=dict(l=0, r=0, t=20, b=20),
                 paper_bgcolor='rgba(0,0,0,0)',
                 showlegend=True,
-                legend=dict(orientation="h", yanchor="top", y=-0.1, xanchor="center", x=0.5, font={'size': 10})
+                legend=dict(orientation="h", yanchor="top", y=-0.05, xanchor="center", x=0.5, font={'size': 11})
             )
             st.plotly_chart(fig, use_container_width=True)
         else:
             st.info("Loading risk data...")
-
-    # ===== ROW 3: Segmentation Analysis =====
-    st.markdown("---")
-    st.markdown("##### Customer Segmentation Analysis")
-
-    if high_risk_data and high_risk_data.get('customers'):
-        df = pd.DataFrame(high_risk_data['customers'])
-
-        col1, col2, col3 = st.columns(3)
-
-        with col1:
-            # Income vs Churn
-            if 'Income_Category' in df.columns:
-                income_churn = df.groupby('Income_Category')['churn_probability'].mean().reset_index()
-                income_order = ['Less than $40K', '$40K - $60K', '$60K - $80K', '$80K - $120K', '$120K +']
-                income_churn['Income_Category'] = pd.Categorical(income_churn['Income_Category'], categories=income_order, ordered=True)
-                income_churn = income_churn.sort_values('Income_Category').dropna()
-
-                fig = go.Figure(data=[go.Bar(
-                    x=income_churn['Income_Category'],
-                    y=income_churn['churn_probability'] * 100,
-                    marker_color='#E5A229',
-                    text=[f"{v:.0f}%" for v in income_churn['churn_probability'] * 100],
-                    textposition='outside'
-                )])
-                fig.update_layout(
-                    title={'text': 'Avg Churn Risk by Income', 'font': {'size': 13}},
-                    height=250,
-                    margin=dict(l=0, r=0, t=40, b=0),
-                    paper_bgcolor='rgba(0,0,0,0)',
-                    plot_bgcolor='rgba(0,0,0,0)',
-                    xaxis=dict(showgrid=False, tickangle=-45),
-                    yaxis=dict(showgrid=True, gridcolor='#f5f5f5', ticksuffix='%', range=[0, 100])
-                )
-                st.plotly_chart(fig, use_container_width=True)
-
-        with col2:
-            # Card Type Distribution
-            if 'Card_Category' in df.columns:
-                card_counts = df['Card_Category'].value_counts()
-
-                fig = go.Figure(data=[go.Bar(
-                    x=card_counts.index,
-                    y=card_counts.values,
-                    marker_color=['#1a1a1a', '#555', '#888', '#bbb'][:len(card_counts)],
-                    text=card_counts.values,
-                    textposition='outside'
-                )])
-                fig.update_layout(
-                    title={'text': 'At-Risk by Card Type', 'font': {'size': 13}},
-                    height=250,
-                    margin=dict(l=0, r=0, t=40, b=0),
-                    paper_bgcolor='rgba(0,0,0,0)',
-                    plot_bgcolor='rgba(0,0,0,0)',
-                    xaxis=dict(showgrid=False),
-                    yaxis=dict(showgrid=True, gridcolor='#f5f5f5')
-                )
-                st.plotly_chart(fig, use_container_width=True)
-
-        with col3:
-            # Tenure Risk Correlation
-            if 'Months_on_book' in df.columns:
-                # Bin tenure into groups
-                df['tenure_group'] = pd.cut(df['Months_on_book'],
-                    bins=[0, 12, 24, 36, 48, 100],
-                    labels=['0-12m', '12-24m', '24-36m', '36-48m', '48m+'])
-                tenure_risk = df.groupby('tenure_group')['churn_probability'].mean().reset_index()
-
-                fig = go.Figure(data=[go.Scatter(
-                    x=tenure_risk['tenure_group'],
-                    y=tenure_risk['churn_probability'] * 100,
-                    mode='lines+markers+text',
-                    line=dict(color='#dc3545', width=2),
-                    marker=dict(size=10, color='#dc3545'),
-                    text=[f"{v:.0f}%" for v in tenure_risk['churn_probability'] * 100],
-                    textposition='top center'
-                )])
-                fig.update_layout(
-                    title={'text': 'Churn Risk by Tenure', 'font': {'size': 13}},
-                    height=250,
-                    margin=dict(l=0, r=0, t=40, b=0),
-                    paper_bgcolor='rgba(0,0,0,0)',
-                    plot_bgcolor='rgba(0,0,0,0)',
-                    xaxis=dict(showgrid=False),
-                    yaxis=dict(showgrid=True, gridcolor='#f5f5f5', ticksuffix='%', range=[0, 100])
-                )
-                st.plotly_chart(fig, use_container_width=True)
 
     # ===== ROW 4: Actionable Insights =====
     st.markdown("---")
@@ -718,7 +604,7 @@ def show_dashboard():
             top_risk = sorted(high_risk_data['customers'], key=lambda x: x['churn_probability'], reverse=True)[:5]
 
             for i, customer in enumerate(top_risk, 1):
-                risk_pct = customer['churn_probability'] * 100
+                risk_pct = min(customer['churn_probability'] * 100, 99.9)
                 risk_color = "#dc3545" if risk_pct >= 60 else "#E5A229"
                 st.markdown(f"""
                 <div style="display:flex; justify-content:space-between; align-items:center;
@@ -729,7 +615,7 @@ def show_dashboard():
                         <div style="font-size:0.8rem; color:#888;">ID: {customer['CLIENTNUM']} • {customer.get('Card_Category', 'N/A')}</div>
                     </div>
                     <div style="text-align:right;">
-                        <div style="font-size:1.2rem; font-weight:600; color:{risk_color};">{risk_pct:.0f}%</div>
+                        <div style="font-size:1.2rem; font-weight:600; color:{risk_color};">{risk_pct:.1f}%</div>
                         <div style="font-size:0.75rem; color:#888;">risk score</div>
                     </div>
                 </div>
@@ -745,20 +631,22 @@ def show_dashboard():
             # Find highest risk segment
             if 'Income_Category' in df.columns:
                 highest_risk_income = df.groupby('Income_Category')['churn_probability'].mean().idxmax()
-                highest_risk_pct = df.groupby('Income_Category')['churn_probability'].mean().max() * 100
+                highest_risk_pct = min(df.groupby('Income_Category')['churn_probability'].mean().max() * 100, 99.9)
             else:
                 highest_risk_income = "Unknown"
                 highest_risk_pct = 0
 
+            avg_risk = min(df['churn_probability'].mean() * 100, 99.9)
+
             insights = [
                 {"icon": "⚠️", "title": "Highest Risk Segment",
                  "text": f"Customers with {highest_risk_income} income show {highest_risk_pct:.0f}% avg churn risk"},
-                {"icon": "📈", "title": "Retention Improving",
-                 "text": "Churn rate decreased 2.1% over last quarter, trending toward 15% target"},
+                {"icon": "📊", "title": "Average Risk Score",
+                 "text": f"At-risk customers have an average churn probability of {avg_risk:.1f}%"},
                 {"icon": "💡", "title": "Recommended Action",
                  "text": f"Prioritize retention campaigns for {at_risk_count} at-risk customers"},
-                {"icon": "💰", "title": "ROI Opportunity",
-                 "text": f"Retaining 50% of at-risk customers saves ~${potential_loss/2000:.0f}K annually"}
+                {"icon": "📧", "title": "Campaign Status",
+                 "text": f"{emails_sent} retention emails sent, {feedback.get('accepted', 0)} offers accepted"}
             ]
 
             for insight in insights:
@@ -775,9 +663,9 @@ def show_dashboard():
 
     with col1:
         report = pd.DataFrame({
-            "Metric": ["Total Customers", "Active", "Churned", "Churn Rate", "Retention Rate", "At-Risk Count", "Revenue at Risk"],
+            "Metric": ["Total Customers", "Active", "Churned", "Churn Rate", "Retention Rate", "At-Risk Count", "Emails Sent"],
             "Value": [stats['total_customers'], stats['existing_customers'], stats['attrited_customers'],
-                     f"{stats['attrition_rate']:.1%}", f"{retention_rate:.1%}", at_risk_count, f"${potential_loss:,}"]
+                     f"{stats['attrition_rate']:.1%}", f"{retention_rate:.1%}", at_risk_count, emails_sent]
         })
         st.download_button("📥 Export Summary", report.to_csv(index=False), "dashboard_summary.csv", "text/csv", use_container_width=True)
 
@@ -906,7 +794,7 @@ def show_customers():
                 col1, col2, col3 = st.columns([3, 1, 1])
                 with col1:
                     st.markdown(f"**{offer['title']}**")
-                    st.caption(f"{offer['description'][:100]}...")
+                    st.caption(f"{offer['description'][:80]}...")
                 with col2:
                     st.markdown(f"<span style='color:#E5A229; font-weight:600;'>{offer['relevance_score']:.0%}</span> match",
                                unsafe_allow_html=True)
@@ -977,6 +865,7 @@ def show_at_risk():
                 # Table
                 display_cols = ['CLIENTNUM', 'First_Name', 'Last_Name', 'churn_probability', 'churn_risk']
                 df_show = df[[c for c in display_cols if c in df.columns]].copy()
+                df_show['CLIENTNUM'] = df_show['CLIENTNUM'].astype(str)
                 df_show['churn_probability'] = df_show['churn_probability'].apply(lambda x: f"{x:.0%}")
                 df_show.columns = ['ID', 'First Name', 'Last Name', 'Risk %', 'Level']
                 st.dataframe(df_show, use_container_width=True, hide_index=True)
@@ -1218,7 +1107,7 @@ def show_campaigns():
         st.markdown("**Automatic Targeting**")
         risk_threshold_pct = st.slider("Target risk above", 0, 100, 60, 5, format="%d%%")
         risk_threshold = risk_threshold_pct / 100.0  # Convert to decimal for API
-        max_customers = st.number_input("Max customers", 1, 1000, 50)
+        max_customers = st.number_input("Max customers", 1, 1000, 5)
 
     with col2:
         st.markdown("**Manual Targeting**")

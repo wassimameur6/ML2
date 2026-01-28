@@ -453,10 +453,6 @@
                 <span class="nav-icon">🎯</span>
                 <span>Performance</span>
             </a>
-            <a href="deepchecks_summary.html" class="nav-item">
-                <span class="nav-icon">🔍</span>
-                <span>Deepchecks</span>
-            </a>
             <a href="http://localhost:8501" class="nav-item">
                 <span class="nav-icon">🏠</span>
                 <span>Dashboard</span>
@@ -476,36 +472,16 @@
             <p>Model performance, data drift detection, and quality validation</p>
         </header>
 
-        <!-- Status Bar -->
-        <div class="status-bar">
-            <div class="status-item">
-                <div class="status-dot online"></div>
-                Evidently AI
-            </div>
-            <div class="status-item">
-                <div class="status-dot online"></div>
-                Deepchecks
-            </div>
-            <div class="status-item">
-                <div class="status-dot online"></div>
-                ML Model
-            </div>
-            <div class="status-item">
-                <div class="status-dot online"></div>
-                Data Pipeline
-            </div>
-        </div>
-
         <!-- KPI Cards -->
         <div class="kpi-grid">
             <div class="kpi-card">
                 <span class="kpi-label">Report Types</span>
-                <span class="kpi-value">2</span>
-                <span class="kpi-sub">Evidently + Deepchecks</span>
+                <span class="kpi-value">1</span>
+                <span class="kpi-sub">Evidently AI</span>
             </div>
             <div class="kpi-card">
                 <span class="kpi-label">Total Reports</span>
-                <span class="kpi-value warning">7</span>
+                <span class="kpi-value warning">4</span>
                 <span class="kpi-sub">HTML + JSON</span>
             </div>
             <div class="kpi-card">
@@ -518,12 +494,6 @@
                 <span class="kpi-value success">Healthy</span>
                 <span class="kpi-sub">All checks passing</span>
             </div>
-        </div>
-
-        <!-- Info Box -->
-        <div class="info-box">
-            <span class="info-icon">💡</span>
-            Reports are generated automatically by the Jenkins CI/CD pipeline during each deployment cycle.
         </div>
 
         <!-- Evidently Reports Section -->
@@ -577,62 +547,9 @@
             </a>
         </div>
 
-        <!-- Deepchecks Reports Section -->
-        <div class="section-header">
-            <h2>Deepchecks Validation Reports</h2>
-        </div>
-
-        <div class="reports-grid">
-            <a href="deepchecks_summary.html" class="report-card">
-                <div class="report-card-header">
-                    <div class="report-icon data">🔍</div>
-                    <div>
-                        <h3>Deepchecks Summary</h3>
-                    </div>
-                </div>
-                <p class="desc">Comprehensive overview of all data and model validation tests. Single-page summary of quality checks.</p>
-                <span class="badge html">HTML Report</span>
-            </a>
-
-            <a href="data_integrity_report.html" class="report-card">
-                <div class="report-card-header">
-                    <div class="report-icon validation">🛡️</div>
-                    <div>
-                        <h3>Data Integrity</h3>
-                    </div>
-                </div>
-                <p class="desc">Validates data quality: missing values, duplicates, type mismatches, outliers, and string anomalies.</p>
-                <span class="badge html">HTML Report</span>
-            </a>
-
-            <a href="train_test_validation_report.html" class="report-card">
-                <div class="report-card-header">
-                    <div class="report-icon drift">⚖️</div>
-                    <div>
-                        <h3>Train-Test Validation</h3>
-                    </div>
-                </div>
-                <p class="desc">Compares training and test data distributions. Detects data leakage and feature drift between splits.</p>
-                <span class="badge html">HTML Report</span>
-            </a>
-
-            <a href="model_evaluation_report.html" class="report-card">
-                <div class="report-card-header">
-                    <div class="report-icon performance">📊</div>
-                    <div>
-                        <h3>Model Evaluation</h3>
-                    </div>
-                </div>
-                <p class="desc">In-depth model evaluation: confusion matrix, ROC curve, calibration, and performance by segment.</p>
-                <span class="badge html">HTML Report</span>
-            </a>
-        </div>
-
         <!-- Actions Row -->
         <div class="actions-row">
-            <a href="http://localhost:8501" class="btn primary">🏠 Back to Dashboard</a>
-            <a href="http://localhost:8000/docs" class="btn">📄 API Docs</a>
-            <a href="http://localhost:8000/health" class="btn">🏥 Health Check</a>
+            <a href="http://localhost:8501" class="btn primary">Back to Dashboard</a>
             <span class="last-updated">Serfy Bank Monitoring Portal</span>
         </div>
     </main>
