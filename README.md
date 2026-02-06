@@ -269,6 +269,3 @@ Response:
 - **Frontend**: Streamlit
 - **Containerization**: Docker, Docker Compose
 
-## License
-
-MLOps Workshop 2025-2026
